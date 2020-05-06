@@ -65,7 +65,7 @@
     Card layout
     -->
 
-    <div class="md-layout md-gutter" id="container">
+    <div class="md-layout" id="container">
       <div class="md-layout-item" v-for="(product,index) in products" :key="index">
         <!-- 
         Book card layout
@@ -80,7 +80,10 @@
               </md-card-media>
 
               <md-card-header>
-                <div class="md-title">{{product.title}}</div>
+                <div class="md-title">
+                  {{product.title}}
+                  <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
+                </div>
                 <div class="md-subhead">by {{product.book.author}}</div>
               </md-card-header>
 
@@ -89,9 +92,6 @@
                   <div>
                     <md-chip>{{product.sem}}</md-chip>
                     <md-chip>{{product.branch}}</md-chip>
-                    <div v-if="product.donation">
-                      <md-chip>D</md-chip>
-                    </div>
                   </div>
                   <md-card-expand-trigger>
                     <md-button class="md-icon-button">
@@ -170,7 +170,11 @@
               </md-card-media>
 
               <md-card-header>
-                <div class="md-title">{{product.title}}</div>
+                <div class="md-title">
+                  {{product.title}}
+                  <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
+                </div>
+
                 <div class="md-subhead">{{product.other.description}}</div>
               </md-card-header>
 
@@ -179,9 +183,6 @@
                   <div>
                     <md-chip>{{product.sem}}</md-chip>
                     <md-chip>{{product.branch}}</md-chip>
-                    <div v-if="product.donation">
-                      <md-chip>D</md-chip>
-                    </div>
                   </div>
                   <md-card-expand-trigger>
                     <md-button class="md-icon-button">
@@ -300,27 +301,12 @@ export default {
   flex-direction: row;
   align-items: center;
 }
-/* #search-bar {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-}
 
-#filters {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-#container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-#cards {
-  margin: 20px;
-}
-
-#donation {
+.donation-chip {
   float: right;
-} */
+}
+
+img {
+  border-radius: 20px !important;
+}
 </style>
