@@ -3,133 +3,60 @@
     <!-- 
     Filters, search bar
     -->
-    <div>
-      <div>
-        <md-toolbar class="md-medium md-transparent" id="search-bar" md-elevation="20">
-          <md-field>
-            <label for="title">Search..</label>
-            <md-input name="title" id="title" v-model="stitle"></md-input>
-            <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
-              <md-icon>search</md-icon>
-            </md-button>
-          </md-field>
-        </md-toolbar>
-
-        <md-card class="search-card">
-          <md-card-header>
-            <md-field>
-              <label for="title">Search..</label>
-              <md-input name="title" id="title" v-model="stitle"></md-input>
-              <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
-                <md-icon>search</md-icon>
-              </md-button>
-            </md-field>
-          </md-card-header>
-
-          <md-card-expand>
-            <md-card-actions md-alignment="space-between">
-              filter
-              <md-card-expand-trigger>
-                <md-button class="md-icon-button">
-                  <md-icon>keyboard_arrow_down</md-icon>
-                </md-button>
-              </md-card-expand-trigger>
-            </md-card-actions>
-
-            <md-card-expand-content>
-              <md-card-content>
-                <div class="md-layout-item md-layout md-gutter" id="filters">
-                  <div class="md-layout-item">
-                    <md-field id="sem-filter">
-                      <label for="sem">Semester</label>
-                      <md-select v-model="ssem" name="sem" id="sem">
-                        <md-option
-                          v-for="semester in semesters"
-                          :value="semester"
-                          :key="semester"
-                        >{{semester}}</md-option>
-                      </md-select>
-                    </md-field>
-                  </div>
-
-                  <div class="md-layout-item">
-                    <md-field id="branch-filter">
-                      <label for="branch">Branch</label>
-                      <md-select v-model="sbranch" name="branch" id="branch">
-                        <md-option
-                          v-for="branch in branches"
-                          :value="branch"
-                          :key="branch"
-                        >{{branch}}</md-option>
-                      </md-select>
-                    </md-field>
-                  </div>
-
-                  <div class="md-layout-item">
-                    <md-field id="donation-filter">
-                      <label for="donation">Type</label>
-                      <md-select v-model="sdonation" name="donation" id="donation">
-                        <md-option value="1">Donation</md-option>
-                        <md-option value="0">Trade</md-option>
-                      </md-select>
-                    </md-field>
-                  </div>
-                  <!-- 
-          Filter Buttons 
-                  -->
-                  <div class="md-layout-item" id="filter-buttons">
-                    <md-button v-on:click="retrieveProducts" class="md-primary">FILTER</md-button>
-                    <md-button v-on:click="clearSearch" class="md-accent">CLEAR</md-button>
-                  </div>
-                </div>
-              </md-card-content>
-            </md-card-expand-content>
-          </md-card-expand>
-        </md-card>
-
-        <!-- 
+    <div id="search-container">
+      <div id="search-box">
+        <!-- <md-toolbar class="md-medium" id="search-bar" md-elevation="20">
+        <md-field>
+          <label for="title">Search..</label>
+          <md-input name="title" id="title" v-model="stitle"></md-input>
+          <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
+            <md-icon>search</md-icon>
+          </md-button>
+        </md-field>
+        </md-toolbar>-->
+        <input id="search-input" placeholder="Search..." name="title" v-model="stitle" />
+        <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
+          <md-icon>search</md-icon>
+        </md-button>
+      </div>
+    </div>
+    <!-- 
         Filters
-        -->
-        <div class="md-layout-item md-layout md-gutter" id="filters">
-          <div class="md-layout-item">
-            <md-field id="sem-filter">
-              <label for="sem">Semester</label>
-              <md-select v-model="ssem" name="sem" id="sem">
-                <md-option
-                  v-for="semester in semesters"
-                  :value="semester"
-                  :key="semester"
-                >{{semester}}</md-option>
-              </md-select>
-            </md-field>
-          </div>
+    -->
+    <div class="md-layout md-gutter" id="filters">
+      <div class="md-layout-item">
+        <md-field id="sem-filter">
+          <label for="sem">Semester</label>
+          <md-select v-model="ssem" name="sem" id="sem">
+            <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
+          </md-select>
+        </md-field>
+      </div>
 
-          <div class="md-layout-item">
-            <md-field id="branch-filter">
-              <label for="branch">Branch</label>
-              <md-select v-model="sbranch" name="branch" id="branch">
-                <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-              </md-select>
-            </md-field>
-          </div>
+      <div class="md-layout-item">
+        <md-field id="branch-filter">
+          <label for="branch">Branch</label>
+          <md-select v-model="sbranch" name="branch" id="branch">
+            <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+          </md-select>
+        </md-field>
+      </div>
 
-          <div class="md-layout-item">
-            <md-field id="donation-filter">
-              <label for="donation">Type</label>
-              <md-select v-model="sdonation" name="donation" id="donation">
-                <md-option value="1">Donation</md-option>
-                <md-option value="0">Trade</md-option>
-              </md-select>
-            </md-field>
-          </div>
-          <!-- 
+      <div class="md-layout-item">
+        <md-field id="donation-filter">
+          <label for="donation">Type</label>
+          <md-select v-model="sdonation" name="donation" id="donation">
+            <md-option value="1">Donation</md-option>
+            <md-option value="0">Trade</md-option>
+          </md-select>
+        </md-field>
+      </div>
+      <!-- 
           Filter Buttons 
-          -->
-          <div class="md-layout-item" id="filter-buttons">
-            <md-button v-on:click="retrieveProducts" class="md-primary">FILTER</md-button>
-            <md-button v-on:click="clearSearch" class="md-accent">CLEAR</md-button>
-          </div>
-        </div>
+      -->
+      <div class="md-layout-item" id="filter-buttons">
+        <md-button v-on:click="retrieveProducts" class="md-primary">FILTER</md-button>
+        <md-button v-on:click="clearSearch" class="md-accent">CLEAR</md-button>
       </div>
     </div>
 
@@ -137,7 +64,7 @@
     Card layout
     -->
 
-    <div class="md-layout" id="container">
+    <div class="md-layout md-alignment-bottom-center" id="container">
       <div class="md-layout-item" v-for="(product,index) in products" :key="index">
         <!-- 
         Book card layout
@@ -353,6 +280,44 @@ export default {
 </script>
  
 <style scoped>
+#search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+#search-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  transition: width 0.4s ease;
+  background: white;
+  box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.6);
+  outline: none;
+}
+#search-input {
+  width: 240px;
+  position: relative;
+  padding: 15px 40px 15px 20px;
+  color: black;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  transition: width 0.4s ease;
+  outline: none;
+}
+#search-input:focus {
+  width: 320px;
+}
+
 .card-expansion {
   height: 480px;
 }
@@ -362,14 +327,14 @@ export default {
 } */
 
 .md-toolbar {
-  border: 4px solid rgba(0, 119, 255, 0.479) !important;
-  box-shadow: 0 7px 45px -10px rgba(0, 119, 255, 0.479) !important;
-  border-radius: 30px !important;
+  box-shadow: 0 7px 45px -10px rgba(67, 137, 255, 1) !important;
+  border-radius: 20px !important;
   margin: 25px !important;
 }
+
 .md-card {
-  width: 280px;
-  margin: 4px;
+  width: 300px;
+  margin-bottom: 20px;
   display: inline-block;
   vertical-align: top;
   box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.6) !important;
