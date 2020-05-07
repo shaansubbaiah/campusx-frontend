@@ -1,14 +1,20 @@
-html {
+/* html {
     z-index: 2;
     position: relative;
-}
+} */
 
 #app {
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(20px, 1fr) minmax(200px, 960px) minmax(20px, 1fr);
-    grid-template-rows: 108px 500px auto 30px;
+    grid-template-columns: minmax(10px, 1fr) minmax(200px, 960px) minmax(10px, 1fr);
+    grid-template-rows: 80px 500px auto 30px;
     grid-gap: .2rem;
+}
+
+.header {
+	grid-row: 2/3;
+	grid-column: 1/2;
+	justify-items: center;
 }
 
 .search {
@@ -24,7 +30,7 @@ html {
 }
 
 
-#logo-bg {
+/* #logo-bg {
     width: 100vw;
     position: relative;
     margin-left: -50vw;
@@ -59,4 +65,4 @@ html {
 	100% {
 		background-position: 0% 50%;
 	}
-}
+} */

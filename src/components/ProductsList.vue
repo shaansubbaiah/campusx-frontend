@@ -5,15 +5,6 @@
     -->
     <div id="search-container">
       <div id="search-box">
-        <!-- <md-toolbar class="md-medium" id="search-bar" md-elevation="20">
-        <md-field>
-          <label for="title">Search..</label>
-          <md-input name="title" id="title" v-model="stitle"></md-input>
-          <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
-            <md-icon>search</md-icon>
-          </md-button>
-        </md-field>
-        </md-toolbar>-->
         <input id="search-input" placeholder="Search..." name="title" v-model="stitle" />
         <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
           <md-icon>search</md-icon>
@@ -64,8 +55,9 @@
     Card layout
     -->
 
-    <div class="md-layout md-alignment-bottom-center" id="container">
-      <div class="md-layout-item" v-for="(product,index) in products" :key="index">
+    <!-- <div class="md-layout md-alignment-bottom-center" id="container"> -->
+    <div id="container">
+      <div v-for="(product,index) in products" :key="index">
         <!-- 
         Book card layout
         -->
@@ -280,13 +272,21 @@ export default {
 </script>
  
 <style scoped>
+#container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: stretch;
+}
+
 #search-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 20px;
+  margin: 40px 20px 20px 20px;
 }
+
 #search-box {
   display: flex;
   flex-direction: row;
@@ -299,7 +299,9 @@ export default {
   box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.6);
   outline: none;
 }
+
 #search-input {
+  font-family: "archiaregular" !important;
   width: 240px;
   position: relative;
   padding: 15px 40px 15px 20px;
@@ -334,7 +336,7 @@ export default {
 
 .md-card {
   width: 300px;
-  margin-bottom: 20px;
+  margin: 10px 5px 10px 5px;
   display: inline-block;
   vertical-align: top;
   box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.6) !important;

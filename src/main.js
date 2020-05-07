@@ -6,8 +6,8 @@ import createPersistedState from 'vuex-persistedstate';
 
 import VeeValidate from 'vee-validate';
 
-require('./assets/app.css')
- 
+// require('./assets/app.css')
+
 Vue.config.productionTip = false;
 
 import VueMaterial from 'vue-material'
@@ -21,25 +21,25 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    token : "",
+    token: "",
     userId: null,
     username: "Stranger"
   },
   mutations: {
-    Login(state,persisted_state){
+    Login(state, persisted_state) {
       state.username = persisted_state.name;
       state.userId = persisted_state.id;
       state.token = persisted_state.tk;
     },
-    Logout(state){
-      state.username = "Strangers";
+    Logout(state) {
+      state.username = "Stranger";
       state.userId = null;
       state.token = "";
     }
   }
 })
 
- 
+
 new Vue({
   router,
   store,
