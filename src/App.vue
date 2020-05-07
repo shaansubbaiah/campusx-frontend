@@ -39,6 +39,8 @@
       <router-view />
     </div>
 
+    <div id="footer">You have reached the bottom!</div>
+
     <!-- 
     FAB
     -->
@@ -90,7 +92,7 @@ export default {
       10px,
       1fr
     );
-  grid-template-rows: 80px 240px 1000px 30px;
+  grid-template-rows: 80px 240px auto 40px;
 }
 
 #header {
@@ -123,6 +125,13 @@ export default {
   grid-row: 2/3;
   font-size: calc(40px + (72 - 40) * ((100vw - 300px) / (1600 - 300)));
   line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px) / (1600 - 300)));
-  text-align: center;
+  justify-self: center;
+}
+
+#footer {
+  grid-column: 2/3;
+  grid-row: 4/5;
+  justify-self: center;
+  margin: 10px;
 }
 </style>
