@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-dialog :md-active="true">
+    <md-dialog :md-active="true" class="md-layout-item md-size-50">
       <md-dialog-content class="md-scrollbar">
         <md-dialog-title>
           POST AN AD!
@@ -51,28 +51,26 @@
                 <md-field class="form-data">
                   <label for="sem">SEM</label>
                   <md-select v-model="product.sem" name="sem" id="sem">
-                    <md-option value="1">1</md-option>
-                    <md-option value="2">2</md-option>
-                    <md-option value="3">3</md-option>
-                    <md-option value="4">4</md-option>
+                    <md-option
+                    v-for="semester in semesters"
+                    :value="semester"
+                    :key="semester"
+                  >{{semester}}</md-option>
                   </md-select>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="branch">BRANCH</label>
                   <md-select v-model="product.branch" name="branch" id="branch">
-                    <md-option value="CSE">CSE</md-option>
-                    <md-option value="ISE">ISE</md-option>
-                    <md-option value="MECH">MECH</md-option>
-                    <md-option value="EEE">EEE</md-option>
+                  <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                   </md-select>
                 </md-field>
 
                 <md-field class="form-data">
-                  <label for="donation">DONATE</label>
+                  <label for="donation">TYPE</label>
                   <md-select v-model="product.donation" name="donation" id="donation">
-                    <md-option value="1">YES</md-option>
-                    <md-option value="0">NO</md-option>
+                    <md-option value="1">Donation</md-option>
+                    <md-option value="0">Trade</md-option>
                   </md-select>
                 </md-field>
 
@@ -141,20 +139,18 @@
                 <md-field class="form-data">
                   <label for="sem">SEM</label>
                   <md-select v-model="product.sem" name="sem" id="sem">
-                    <md-option value="1">1</md-option>
-                    <md-option value="2">2</md-option>
-                    <md-option value="3">3</md-option>
-                    <md-option value="4">4</md-option>
+                    <md-option
+                    v-for="semester in semesters"
+                    :value="semester"
+                    :key="semester"
+                  >{{semester}}</md-option>
                   </md-select>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="branch">BRANCH</label>
                   <md-select v-model="product.branch" name="branch" id="branch">
-                    <md-option value="CSE">CSE</md-option>
-                    <md-option value="ISE">ISE</md-option>
-                    <md-option value="MECH">MECH</md-option>
-                    <md-option value="EEE">EEE</md-option>
+                    <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                   </md-select>
                 </md-field>
 
@@ -196,28 +192,26 @@
                 <md-field class="form-data">
                   <label for="sem">SEM</label>
                   <md-select v-model="product.sem" name="sem" id="sem">
-                    <md-option value="1">1</md-option>
-                    <md-option value="2">2</md-option>
-                    <md-option value="3">3</md-option>
-                    <md-option value="4">4</md-option>
+                    <md-option
+                    v-for="semester in semesters"
+                    :value="semester"
+                    :key="semester"
+                  >{{semester}}</md-option>
                   </md-select>
                 </md-field>
 
                 <md-field class="form-data">
                   <label for="branch">BRANCH</label>
                   <md-select v-model="product.branch" name="branch" id="branch">
-                    <md-option value="CSE">CSE</md-option>
-                    <md-option value="ISE">ISE</md-option>
-                    <md-option value="MECH">MECH</md-option>
-                    <md-option value="EEE">EEE</md-option>
+                    <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                   </md-select>
                 </md-field>
 
                 <md-field class="form-data">
-                  <label for="donation">DONATE</label>
+                  <label for="donation">TYPE</label>
                   <md-select v-model="product.donation" name="donation" id="donation">
-                    <md-option value="1">YES</md-option>
-                    <md-option value="0">NO</md-option>
+                    <md-option value="1">Donation</md-option>
+                    <md-option value="0">Trade</md-option>
                   </md-select>
                 </md-field>
 
@@ -245,6 +239,69 @@
               </form>
             </div>
           </md-tab>
+
+          <md-tab md-label="LOST N FOUND">
+            <div v-if="!submitted">
+              <form @submit.prevent="saveLostfound('lostfound')" data-vv-scope="lostfound">
+
+                <md-field class="form-data">
+                  <label for="title">TITLE</label>
+                  <md-input
+                    name="title"
+                    id="title"
+                    v-model="product.title"
+                    v-validate="{required:true}"
+                  ></md-input>
+                  <div v-if="errors.has('lostfound.title')">{{errors.first('lostfound.title')}}</div>
+                </md-field>
+
+                <md-field class="form-data">
+                  <label for="description">DESCRIPTION</label>
+                  <md-input
+                    name="description"
+                    id="description"
+                    v-model="product.description"
+                    v-validate="{required:true}"
+                  ></md-input>
+                  <div v-if="errors.has('lostfound.description')">{{errors.first('lostfound.description')}}</div>
+                </md-field>
+
+                <md-field class="form-data">
+                  <label for="location">LOCATION</label>
+                  <md-input
+                    name="location"
+                    id="location"
+                    v-model="product.location"
+                    v-validate="{required:true}"
+                  ></md-input>
+                  <div v-if="errors.has('lostfound.location')">{{errors.first('lostfound.location')}}</div>
+                </md-field>
+
+                <md-field class="form-data">
+                  <label for="phone">CONTACT</label>
+                  <md-input
+                    name="phone"
+                    id="phone"
+                    v-model="product.phone"
+                    v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"
+                  ></md-input>
+                  <div v-if="errors.has('lostfound.phone')">{{errors.first('lostfound.phone')}}</div>
+                </md-field>
+
+                <md-field class="form-data">
+                  <label>IMAGE</label>
+                  <md-input type="file" @change="onFileSelected" accept="image/*" />
+                </md-field>
+
+                <span>
+                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
+                </span>
+
+              </form>
+            </div>
+          </md-tab>
+
         </md-tabs>
       </md-dialog-content>
     </md-dialog>
@@ -260,7 +317,19 @@ export default {
     return {
       product: {},
       selectedFile: null,
-      submitted: false
+      submitted: false,
+      semesters: ["1", "2", "3", "4", "5", "6", "7", "8"],
+      branches: [
+        "CSE",
+        "ISE",
+        "ECE",
+        "MECH",
+        "CIV",
+        "BIO",
+        "MED",
+        "ELEC",
+        "ARCH"
+      ]
     };
   },
   methods: {
@@ -333,9 +402,11 @@ export default {
                 }
               })
               .then(response => {
+                alert()
                 this.book.id = response.data.id;
               })
               .catch(e => {
+                alert(e)
                 console.log(e);
               });
           } catch (err) {
@@ -375,6 +446,45 @@ export default {
               })
               .then(response => {
                 this.book.id = response.data.id;
+              })
+              .catch(e => {
+                console.log(e);
+              });
+          } catch (err) {
+            console.log(err);
+          }
+
+          this.submitted = true;
+          this.$router.push("/");
+          location.reload();
+        }
+      });
+    },
+
+    saveLostfound(scope) {
+      this.$validator.validateAll(scope).then(async isValid => {
+        if (isValid) {
+          
+          const fd = new FormData();
+          // image stuff
+          fd.append("image", this.selectedFile, this.selectedFile.name);
+          // other data
+          fd.append("title", this.product.title);
+          fd.append("description", this.product.description);
+          fd.append("location", this.product.location);
+          fd.append("phone", this.product.phone);
+          fd.append("userId", this.$store.state.userId);
+
+          try {
+            await axios
+              .post("http://localhost:8080/api/lostfound/post", fd, {
+                headers: {
+                  "content-type": undefined,
+                  Authorization: "Bearer " + this.$store.state.token
+                }
+              })
+              .then(response => {
+                this.lostfound.id = response.data.id;
               })
               .catch(e => {
                 console.log(e);
