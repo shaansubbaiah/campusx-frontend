@@ -50,28 +50,26 @@
                     <md-field class="form-data">
                       <label for="sem">SEM</label>
                       <md-select v-model="product.sem" name="sem" id="sem">
-                        <md-option value="1">1</md-option>
-                        <md-option value="2">2</md-option>
-                        <md-option value="3">3</md-option>
-                        <md-option value="4">4</md-option>
+                        <md-option
+                          v-for="semester in semesters"
+                          :value="semester"
+                          :key="semester"
+                        >{{semester}}</md-option>
                       </md-select>
                     </md-field>
 
                     <md-field class="form-data">
                       <label for="branch">BRANCH</label>
                       <md-select v-model="product.branch" name="branch" id="branch">
-                        <md-option value="CSE">CSE</md-option>
-                        <md-option value="ISE">ISE</md-option>
-                        <md-option value="MECH">MECH</md-option>
-                        <md-option value="EEE">EEE</md-option>
+                        <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                       </md-select>
                     </md-field>
 
                     <md-field class="form-data">
-                      <label for="donation">DONATE</label>
+                      <label for="donation">TYPE</label>
                       <md-select v-model="product.donation" name="donation" id="donation">
-                        <md-option value="1">YES</md-option>
-                        <md-option value="0">NO</md-option>
+                        <md-option value="1">Donation</md-option>
+                        <md-option value="0">Trade</md-option>
                       </md-select>
                     </md-field>
 
@@ -132,20 +130,18 @@
                     <md-field class="form-data">
                       <label for="sem">SEM</label>
                       <md-select v-model="product.sem" name="sem" id="sem">
-                        <md-option value="1">1</md-option>
-                        <md-option value="2">2</md-option>
-                        <md-option value="3">3</md-option>
-                        <md-option value="4">4</md-option>
+                        <md-option
+                          v-for="semester in semesters"
+                          :value="semester"
+                          :key="semester"
+                        >{{semester}}</md-option>
                       </md-select>
                     </md-field>
 
                     <md-field class="form-data">
                       <label for="branch">BRANCH</label>
                       <md-select v-model="product.branch" name="branch" id="branch">
-                        <md-option value="CSE">CSE</md-option>
-                        <md-option value="ISE">ISE</md-option>
-                        <md-option value="MECH">MECH</md-option>
-                        <md-option value="EEE">EEE</md-option>
+                        <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                       </md-select>
                     </md-field>
 
@@ -185,28 +181,26 @@
                     <md-field class="form-data">
                       <label for="sem">SEM</label>
                       <md-select v-model="product.sem" name="sem" id="sem">
-                        <md-option value="1">1</md-option>
-                        <md-option value="2">2</md-option>
-                        <md-option value="3">3</md-option>
-                        <md-option value="4">4</md-option>
+                        <md-option
+                          v-for="semester in semesters"
+                          :value="semester"
+                          :key="semester"
+                        >{{semester}}</md-option>
                       </md-select>
                     </md-field>
 
                     <md-field class="form-data">
                       <label for="branch">BRANCH</label>
                       <md-select v-model="product.branch" name="branch" id="branch">
-                        <md-option value="CSE">CSE</md-option>
-                        <md-option value="ISE">ISE</md-option>
-                        <md-option value="MECH">MECH</md-option>
-                        <md-option value="EEE">EEE</md-option>
+                        <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                       </md-select>
                     </md-field>
 
                     <md-field class="form-data">
-                      <label for="donation">DONATE</label>
+                      <label for="donation">TYPE</label>
                       <md-select v-model="product.donation" name="donation" id="donation">
-                        <md-option value="1">YES</md-option>
-                        <md-option value="0">NO</md-option>
+                        <md-option value="1">Donation</md-option>
+                        <md-option value="0">Trade</md-option>
                       </md-select>
                     </md-field>
 
@@ -240,7 +234,19 @@ export default {
     name: "product",
     data() {
         return {
-            product: {}
+          product: {},
+          semesters: ["1", "2", "3", "4", "5", "6", "7", "8"],
+          branches: [
+            "CSE",
+            "ISE",
+            "ECE",
+            "MECH",
+            "CIV",
+            "BIO",
+            "MED",
+            "ELEC",
+            "ARCH"
+          ]
         };
   },
   methods: {
