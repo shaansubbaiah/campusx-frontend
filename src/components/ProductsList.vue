@@ -324,10 +324,6 @@ export default {
   height: 480px;
 }
 
-/* .search-card {
-  width: 640px;
-} */
-
 .md-toolbar {
   box-shadow: 0 7px 45px -10px rgba(67, 137, 255, 1) !important;
   border-radius: 20px !important;

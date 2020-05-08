@@ -8,9 +8,10 @@ import Product from "./components/Product.vue";
 import UpdateThing from "./components/UpdateThing.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
+import LostFound from "./components/LostFound.vue";
 
 Vue.use(Router);
- 
+
 export default new Router({
   mode: "history",
   routes: [
@@ -31,23 +32,28 @@ export default new Router({
     },
     {
       path: "/product/:id",
-      name: "product",  
+      name: "product",
       component: Product
     },
     {
       path: "/update/:id",
-      name: "update",  
+      name: "update",
       component: UpdateThing
     },
     {
       path: "/login",
-      name: "login",  
+      name: "login",
       component: Login
     },
     {
       path: "/register",
-      name: "register",  
+      name: "register",
       component: Register
+    },
+    {
+      path: "/lostfound",
+      name: "lostfound",
+      component: LostFound
     }
   ]
 });

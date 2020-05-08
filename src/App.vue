@@ -32,6 +32,7 @@
       >
         <md-tab id="tab-products" md-label="All Items" md-icon="group" to="/" exact></md-tab>
         <md-tab id="tab-user" md-label="Your Items" md-icon="person" to="/userproducts"></md-tab>
+        <md-tab id="lost-found" md-label="Lost N Found" md-icon="live_help" to="/lostfound"></md-tab>
       </md-tabs>
       <!-- 
       Content render here
