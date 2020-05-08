@@ -1,14 +1,14 @@
 <template>
   <div>
     <div id="container">
-      <div v-for="(LostFound,index) in lostfounds" :key="index">
+      <div v-for="(lostfound,index) in lostfounds" :key="index">
         <!-- 
         LostFound card layout
         -->
         <md-card>
           <md-ripple>
             <md-card-media>
-              <img v-bind:src="'http://localhost:8080/'+product.book.image" alt="lostfound.title" />
+              <img v-bind:src="'http://localhost:8080/'+lostfound.image" alt="lostfound.title" />
             </md-card-media>
 
             <md-card-header>
@@ -45,10 +45,31 @@
 </template>
 
 <script>
+import http from "../http-common";
+
 export default {
   name: "LostFound",
   data() {
-    return {};
+    return {
+      lostfounds: {}
+    };
+  },
+  methods: {
+    retrieveLostandFound() {
+      http
+        .get(
+          "/lostfound/all"
+        )
+        .then(response => {
+          this.lostfounds = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  },
+  mounted() {
+    this.retrieveLostandFound();
   }
 };
 </script>
