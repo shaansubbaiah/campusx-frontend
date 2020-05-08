@@ -6,7 +6,7 @@ import createPersistedState from 'vuex-persistedstate';
 
 import VeeValidate from 'vee-validate';
 
-// require('./assets/app.css')
+require('./assets/stylesheets/style.css')
 
 Vue.config.productionTip = false;
 

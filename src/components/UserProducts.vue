@@ -1,114 +1,154 @@
 <template>
-    <div class="card-expansion">
-        <md-card>
-            <div class="md-layout md-gutter" id="container">
-                <div v-for="(product,index) in products" :key="index">
+  <div class="card-expansion">
+    <div class="container">
+      <div v-for="(product,index) in products" :key="index">
+        <!-- 
+        Book card layout
+        -->
+        <div v-if="product.book">
+          <transition name="fade">
+            <md-card class="rounded-card">
+              <md-ripple>
+                <md-card-media>
+                  <a :href="'/product/' + product.id">
+                    <img
+                      v-bind:src="'http://localhost:8080/'+product.book.image"
+                      alt="product.title"
+                    />
+                  </a>
+                </md-card-media>
 
-                <div v-if="product.book">
-                    <div class="md-layout-item" id="cards">
-                    <md-card md-with-hover>
-                        <md-ripple>
-                        <md-card-media>
-                        </md-card-media>
-                        <md-card-header>
-                            <div class="md-title">{{product.title}}</div>
-                            <div class="md-subhead">by {{product.book.author}}</div>
-                            <div class="md-subhead">{{product.book.publisher}}</div>
-                        </md-card-header>
+                <md-card-header>
+                  <div class="md-title">
+                    {{product.title}}
+                    <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
+                  </div>
+                  <div class="md-subhead">by {{product.book.author}}</div>
+                </md-card-header>
 
-                        <md-card-expand>
-                            <md-card-actions md-alignment="space-between">
-                            <div>
-                                <md-chip class="md-primary" md-clickable>{{product.sem}}</md-chip>
-                                <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
-                            </div>
-                            </md-card-actions>
-                        </md-card-expand>
-                        <span>
-                            <md-button v-on:click="deleteProduct(product.id)" class="md-dense md-accent">
-                            <router-link to="/userproducts">DELETE</router-link>
-                            </md-button>
-                            <md-button class="md-dense md-accent">
-                            <a :href="'/update/' + product.id">EDIT</a>
-                            </md-button>
-                        </span>
-                        </md-ripple>
-                    </md-card>
+                <md-card-expand>
+                  <md-card-actions md-alignment="space-between">
+                    <div>
+                      <md-chip>{{product.sem}}</md-chip>
+                      <md-chip>{{product.branch}}</md-chip>
                     </div>
+                    <md-card-expand-trigger>
+                      <md-button class="md-icon-button">
+                        <md-icon>keyboard_arrow_down</md-icon>
+                      </md-button>
+                    </md-card-expand-trigger>
+                  </md-card-actions>
+
+                  <md-card-expand-content>
+                    <md-card-content>
+                      Published by {{product.book.publisher}}
+                      <br />
+                      Contact: {{product.book.phone}}
+                      <br />
+                      Posted at: {{product.createdAt}}
+                      <br />
+                    </md-card-content>
+                  </md-card-expand-content>
+                </md-card-expand>
+              </md-ripple>
+            </md-card>
+          </transition>
+        </div>
+
+        <!-- 
+        Drive card layout
+        -->
+        <div v-if="product.drive">
+          <md-card class="rounded-card">
+            <md-ripple>
+              <md-card-header>
+                <a :href="'/product/' + product.id">
+                  <div class="md-title">{{product.title}}</div>
+                  <div class="md-subhead">by {{product.drive.description}}</div>
+                </a>
+              </md-card-header>
+
+              <md-card-expand>
+                <md-card-actions md-alignment="space-between">
+                  <div>
+                    <md-chip>{{product.sem}}</md-chip>
+                    <md-chip>{{product.branch}}</md-chip>
+                  </div>
+                  <md-card-expand-trigger>
+                    <md-button class="md-icon-button">
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-expand-trigger>
+                </md-card-actions>
+
+                <md-card-expand-content>
+                  <md-card-content>
+                    Links to: {{product.drive.url}}
+                    <br />
+                    Posted at: {{product.createdAt}}
+                    <br />
+                  </md-card-content>
+                </md-card-expand-content>
+              </md-card-expand>
+            </md-ripple>
+          </md-card>
+        </div>
+
+        <!-- 
+        Other card layout
+        -->
+        <div v-if="product.other">
+          <md-card class="rounded-card">
+            <md-ripple>
+              <md-card-media>
+                <a :href="'/product/' + product.id">
+                  <img
+                    v-bind:src="'http://localhost:8080/'+product.other.image"
+                    alt="product.title"
+                  />
+                </a>
+              </md-card-media>
+
+              <md-card-header>
+                <div class="md-title">
+                  {{product.title}}
+                  <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
                 </div>
 
-                <div v-if="product.drive">
-                    <div class="md-layout-item" id="cards">
-                    <md-card md-with-hover>
-                        <md-ripple>
-                        <md-card-header>
-                            <div class="md-title">{{product.title}}</div>
-                            <div class="md-subhead">{{product.drive.description}}</div>
-                            <div class="link">
-                            <a v-bind:href="product.drive.url">{{product.drive.url}}</a>
-                            </div>
-                        </md-card-header>
+                <div class="md-subhead">{{product.other.description}}</div>
+              </md-card-header>
 
-                        <md-card-expand>
-                            <md-card-actions md-alignment="space-between">
-                            <div>
-                                <md-chip class="md-primary" md-clickable>{{product.sem}}</md-chip>
-                                <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
-                            </div>
-                            </md-card-actions>
-                        </md-card-expand>
-                        <span>
-                            <md-button v-on:click="deleteProduct(product.id)" class="md-dense md-accent">
-                            <router-link to="/userproducts">DELETE</router-link>
-                            </md-button>
-                            <md-button class="md-dense md-accent">
-                            <a :href="'/update/' + product.id">EDIT</a>
-                            </md-button>
-                        </span>
-                        </md-ripple>
-                    </md-card>
-                    </div>
-                </div>
+              <md-card-expand>
+                <md-card-actions md-alignment="space-between">
+                  <div>
+                    <md-chip>{{product.sem}}</md-chip>
+                    <md-chip>{{product.branch}}</md-chip>
+                  </div>
+                  <md-card-expand-trigger>
+                    <md-button class="md-icon-button">
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-expand-trigger>
+                </md-card-actions>
 
-                <div v-if="product.other">
-                    <div class="md-layout-item" id="cards">
-                    <md-card md-with-hover>
-                        <md-ripple>
-                        <md-card-media>
-                        </md-card-media>
-                        <md-card-header>
-                            <div class="md-title">{{product.title}}</div>
-                            <div class="md-subhead">{{product.other.description}}</div>
-                        </md-card-header>
-
-                        <md-card-expand>
-                            <md-card-actions md-alignment="space-between">
-                            <div>
-                                <md-chip class="md-primary" md-clickable>{{product.sem}}</md-chip>
-                                <md-chip class="md-primary" md-clickable>{{product.branch}}</md-chip>
-                            </div>
-                            </md-card-actions>
-                        </md-card-expand>
-                        <span>
-                            <md-button v-on:click="deleteProduct(product.id)" class="md-dense md-accent">
-                            <router-link to="/userproducts">DELETE</router-link>
-                            </md-button>
-                            <md-button class="md-dense md-accent">
-                            <a :href="'/update/' + product.id">EDIT</a>
-                            </md-button>
-                        </span>
-                        </md-ripple>
-                    </md-card>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </md-card>
+                <md-card-expand-content>
+                  <md-card-content>
+                    Contact: {{product.other.phone}}
+                    <br />
+                    Posted at: {{product.createdAt}}
+                    <br />
+                  </md-card-content>
+                </md-card-expand-content>
+              </md-card-expand>
+            </md-ripple>
+          </md-card>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
@@ -120,36 +160,43 @@ export default {
   },
   methods: {
     async userProducts() {
-      try{
+      try {
         await axios
-            .get("http://localhost:8080/api/users/"+this.$store.state.userId+"/things") 
-        .then(response => {
-          this.products = response.data;
-          console.log(response.data);
-        })
-        .catch(e => { 
-          console.log(e);
-        });
-      }
-      catch(err){
+          .get(
+            "http://localhost:8080/api/users/" +
+              this.$store.state.userId +
+              "/things"
+          )
+          .then(response => {
+            this.products = response.data;
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } catch (err) {
         console.log(err);
       }
     },
     async deleteProduct(id) {
       await axios
-            .delete("http://localhost:8080/api/things/"+id, { headers: { Authorization: 'Bearer ' + this.$store.state.token } } )
+        .delete("http://localhost:8080/api/things/" + id, {
+          headers: { Authorization: "Bearer " + this.$store.state.token }
+        })
         .then(response => {
           this.userProducts();
           console.log(response.data);
         })
         .catch(e => {
           console.log(e);
-        })
+        });
     }
   },
-  mounted() { 
+  mounted() {
     this.userProducts();
   }
 };
-
 </script> 
+
+<style scoped>
+</style>
