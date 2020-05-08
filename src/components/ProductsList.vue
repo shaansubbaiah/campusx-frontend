@@ -120,7 +120,7 @@
               <md-card-header>
                 <a :href="'/product/' + product.id">
                   <div class="md-title">{{product.title}}</div>
-                  <div class="md-subhead">by {{product.drive.description}}</div>
+                  <div class="md-subhead">{{product.drive.description}}</div>
                 </a>
               </md-card-header>
 
