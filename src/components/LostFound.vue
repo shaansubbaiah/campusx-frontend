@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div id="container">
+    <div class="container">
       <div v-for="(lostfound,index) in lostfounds" :key="index">
         <!-- 
         LostFound card layout
         -->
-        <md-card>
+        <md-card class="thing-card">
           <md-ripple>
             <md-card-media>
               <img v-bind:src="'http://localhost:8080/'+lostfound.image" alt="lostfound.title" />
@@ -57,9 +57,7 @@ export default {
   methods: {
     retrieveLostandFound() {
       http
-        .get(
-          "/lostfound/all"
-        )
+        .get("/lostfound/all")
         .then(response => {
           this.lostfounds = response.data;
         })
