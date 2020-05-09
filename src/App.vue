@@ -73,20 +73,7 @@ export default {
 </script> 
 
 <style scoped>
-@font-face {
-  font-family: "archiaregular";
-  src: url("assets/fonts/archia-regular-webfont.eot");
-  src: url("assets/fonts/archia-regular-webfont.eot?#iefix")
-      format("embedded-opentype"),
-    url("assets/fonts/archia-regular-webfont.woff2") format("woff2"),
-    url("assets/fonts/archia-regular-webfont.woff") format("woff"),
-    url("assets/fonts/archia-regular-webfont.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 #app {
-  font-family: "archiaregular" !important;
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(10px, 1fr) minmax(200px, 960px) minmax(

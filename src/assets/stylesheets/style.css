@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "archiaregular";
+  src: url("../fonts/archia-regular-webfont.eot");
+  src: url("../fonts/archia-regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/archia-regular-webfont.woff2") format("woff2"),
+    url("../fonts/archia-regular-webfont.woff") format("woff"),
+    url("../fonts/archia-regular-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{
+ font-family: "archiaregular"; 
+}
+
 .container {
   display: flex;
   flex-flow: row wrap;
@@ -42,4 +58,12 @@ img,
 
 .donation-chip {
   float: right;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
