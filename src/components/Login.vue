@@ -1,15 +1,7 @@
 <template>
   <div>
     <md-dialog :md-active="true">
-      <md-dialog-content class="md-scrollbar">
-        <md-dialog-title>
-          Login
-          <md-button class="md-icon-button" id="cancel-btn">
-            <router-link to="/">
-              <md-icon>cancel</md-icon>
-            </router-link>
-          </md-button>
-        </md-dialog-title>
+      <md-dialog-content>
         <form>
           <div v-if="!submitted">
             <md-field class="form-data">
@@ -34,7 +26,10 @@
               <div v-if="errors.has('password')">{{errors.first('password')}}</div>
             </md-field>
 
-            <md-button v-on:click="login" class="md-dense md-raised md-primary">LOGIN</md-button>
+            <md-dialog-actions>
+              <md-button v-on:click="login" class="md-raised md-primary">Login</md-button>
+              <md-button class="md-accent" to="/">Cancel</md-button>
+            </md-dialog-actions>
           </div>
         </form>
 
