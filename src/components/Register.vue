@@ -106,32 +106,32 @@ export default {
     }
   },
   validateRegister() {
-      this.$v.$touch()
+    this.$v.$touch()
 
-      if (!this.$v.$invalid) {
-        this.register()
-      }
-    },
-    register() {
-      var data = {
-        name: this.user.name,
-        email: this.user.email,
-        password: this.user.password
-      };
-        http
-          .post("/users/register", data)
-          .then(response => {
-            if (response.data.message == `Email has already registered.`) {
-              this.message = response.data.message;
-            } else {
-              this.message = "Successful..Login to continue";
-            }
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-        this.submitted = true;
+    if (!this.$v.$invalid) {
+      this.register()
+    }
+  },
+  register() {
+    var data = {
+      name: this.user.name,
+      email: this.user.email,
+      password: this.user.password
+    };
+      http
+        .post("/users/register", data)
+        .then(response => {
+          if (response.data.message == `Email has already registered.`) {
+            this.message = response.data.message;
+          } else {
+            this.message = "Successful..Login to continue";
+          }
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      this.submitted = true;
     }
   }
 };

@@ -29,7 +29,6 @@
             <span class="md-error" v-else-if="!$v.user.password.minLength">Atleast 8 characters</span>
             </md-field>
 
-
             <md-dialog-actions>
               <md-button v-on:click="validateLogin" class="md-raised md-primary">Login</md-button>
               <md-button class="md-accent" to="/">Cancel</md-button>
@@ -89,38 +88,35 @@ export default {
     }
   },
   validateLogin() {
-      this.$v.$touch()
-
-      if (!this.$v.$invalid) {
-        this.login()
-      }
-    },
-    login() {
+    this.$v.$touch()
+    if (!this.$v.$invalid) {
+      this.login()
+    }
+  },
+  login() {
+    this.submitted = true;
+    var data = {
+      email: this.user.email,
+      password: this.user.password
+    };
+    http
+      .post("/users/login", data)
+      .then(response => {
+        this.message = response.data.message;
+        if (response.status) {
+          var persisted_state = {
+            name: response.data.name,
+            id: response.data.id,
+            tk: response.data.token
+          };
+          this.$store.commit("Login", persisted_state);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
       this.submitted = true;
-      var data = {
-        email: this.user.email,
-        password: this.user.password
-      };
-      http
-        .post("/users/login", data)
-        .then(response => {
-          this.message = response.data.message;
-          if (response.status) {
-            var persisted_state = {
-              name: response.data.name,
-              id: response.data.id,
-              tk: response.data.token
-            };
-            this.$store.commit("Login", persisted_state);
-          }
-        })
-        .catch(e => {
-          console.log(e);
-        });
-        this.submitted = true;
     }
   }
 };
 </script>
-<style scoped>
-</style>
