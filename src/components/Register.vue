@@ -4,44 +4,52 @@
       <md-dialog-content>
         <form>
           <div v-if="!submitted">
-            <md-field class="form-data">
-              <label for="name">Username</label>
+
+            <md-field :class="getValidationClass('name')">
+              <label for="name">USERNAME</label>
               <md-input
+                type="name"
                 name="name"
                 id="name"
                 v-model="user.name"
-                v-validate="'required|min:3|max:20'"
+
               ></md-input>
-              <div v-if="errors.has('name')">{{errors.first('name')}}</div>
+              <span class="md-error" v-if="!$v.user.name.required">The username is required</span>
+              <span class="md-error" v-else-if="!$v.user.name.minLength">Atleast 3 characters</span>
             </md-field>
 
-            <md-field class="form-data">
+            <md-field :class="getValidationClass('email')">
               <label for="email">Email</label>
               <md-input
+                type="email"
                 name="email"
                 id="email"
                 v-model="user.email"
-                v-validate="'required|email|max:50'"
+
               ></md-input>
-              <div v-if="errors.has('email')">{{errors.first('email')}}</div>
+              <span class="md-error" v-if="!$v.user.email.required">The email is required</span>
+            <span class="md-error" v-else-if="!$v.user.email.email">Invalid email</span>
             </md-field>
 
-            <md-field class="form-data">
-              <label for="password">Password</label>
+            <md-field :class="getValidationClass('password')">
+              <label for="password">PASSWORD</label>
               <md-input
+                type="password"
                 name="password"
                 id="password"
                 v-model="user.password"
-                v-validate="'required|min:8|max:20'"
+
               ></md-input>
-              <div v-if="errors.has('password')">{{errors.first('password')}}</div>
+              <span class="md-error" v-if="!$v.user.password.required">The password is required</span>
+            <span class="md-error" v-else-if="!$v.user.password.minLength">Atleast 8 characters</span>
             </md-field>
+
           </div>
         </form>
 
         <div v-if="message">{{message}}</div>
         <md-dialog-actions>
-          <md-button v-on:click="register" class="md-raised md-primary">Register</md-button>
+          <md-button v-on:click="validateRegister" class="md-raised md-primary">Register</md-button>
           <md-button class="md-accent" to="/">Cancel</md-button>
         </md-dialog-actions>
       </md-dialog-content>
@@ -51,9 +59,18 @@
 
 <script>
 import http from "../http-common";
+import { validationMixin } from 'vuelidate'
+
+import {
+  required,
+  email,
+  minLength
+} from 'vuelidate/lib/validators'
+
 
 export default {
   name: "Register",
+  mixins: [validationMixin],
   data() {
     return {
       message: "",
@@ -65,36 +82,59 @@ export default {
       }
     };
   },
+  validations: {
+    user: {
+      name: {
+        required,
+        minLength: minLength(3)
+      },
+      email: {
+        required,
+        email
+      },
+      password: {
+        required,
+        minLength: minLength(8)
+      }
+    }
+  },
   methods: {
-    register() {
-      this.$validator.validate().then(async isValid => {
-        if (isValid) {
-          var data = {
-            name: this.user.name,
-            email: this.user.email,
-            password: this.user.password
-          };
-          try {
-            await http
-              .post("/users/register", data)
-              .then(response => {
-                if (response.data.message == `Email has already registered.`) {
-                  this.message = response.data.message;
-                } else {
-                  this.message = "Successful..Login to continue";
-                }
-                console.log(response.data);
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          } catch (err) {
-            console.log(err);
-          }
+  getValidationClass(fieldName) {
+    const field = this.$v.user[fieldName]
 
-          this.submitted = true;
-        }
-      });
+    if (field) {
+      return {
+        'md-invalid': field.$invalid && field.$dirty
+      }
+    }
+  },
+  validateRegister() {
+      this.$v.$touch()
+
+      if (!this.$v.$invalid) {
+        this.register()
+      }
+    },
+    register() {
+      var data = {
+        name: this.user.name,
+        email: this.user.email,
+        password: this.user.password
+      };
+        http
+          .post("/users/register", data)
+          .then(response => {
+            if (response.data.message == `Email has already registered.`) {
+              this.message = response.data.message;
+            } else {
+              this.message = "Successful..Login to continue";
+            }
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+        this.submitted = true;
     }
   }
 };
