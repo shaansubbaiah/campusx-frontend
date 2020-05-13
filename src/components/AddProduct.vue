@@ -1,318 +1,261 @@
 <template>
-  <div>
-    <md-dialog :md-active="true" class="md-layout-item md-size-50">
-      <md-dialog-content class="md-scrollbar">
-        <md-dialog-title>
-          POST AN AD!
-          <md-button class="md-icon-button" id="cancel-btn">
-            <router-link to="/">
-              <md-icon>cancel</md-icon>
-            </router-link>
-          </md-button>
-        </md-dialog-title>
-        <md-tabs md-dynamic-height>
-          <md-tab md-label="BOOK">
-            <div v-if="!submitted">
-              <form @submit.prevent="saveBook('book')" data-vv-scope="book">
+<div>
+  <md-dialog :md-active="true">
+    <md-dialog-content class="md-scrollbar">
+      <md-dialog-title>
+        POST AN AD!
+        <md-button class="md-icon-button" id="cancel-btn">
+          <router-link to="/">
+            <md-icon>cancel</md-icon>
+          </router-link>
+        </md-button>
+      </md-dialog-title>
+      <md-tabs md-dynamic-height>
 
-                <md-field class="form-data">
-                  <label for="title">TITLE</label>
-                  <md-input
-                    name="title"
-                    id="title"
-                    v-model="product.title"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('book.title')">{{errors.first('book.title')}}</div>
-                </md-field>
+      <md-tab md-label="BOOK">
+          <div v-if="!submitted">
+            <form @submit.prevent="validateBook">
 
-                <md-field class="form-data">
-                  <label for="author">AUTHOR</label>
-                  <md-input
-                    name="author"
-                    id="author"
-                    v-model="product.author"
-                    v-validate="{required:true, regex: /[A-Za-z]+/}"
-                  ></md-input>
-                  <div v-if="errors.has('book.author')">{{errors.first('book.author')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('title')">
+                <label for="title">TITLE</label>
+                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="publisher">PUBLISHER</label>
-                  <md-input
-                    name="publisher"
-                    id="publisher"
-                    v-model="product.publisher"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('book.publisher')">{{errors.first('book.publisher')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('author')">
+                <label for="author">AUTHOR</label>
+                <md-input name="author" id="author" v-model="product.author"></md-input>
+                <span class="md-error" v-if="!$v.product.author.required">Required field</span>
+                <span class="md-error" v-else-if="!$v.product.author.alphabet">Invalid characters</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="sem">SEM</label>
-                  <md-select v-model="product.sem" name="sem" id="sem">
-                    <md-option
-                    v-for="semester in semesters"
-                    :value="semester"
-                    :key="semester"
-                  >{{semester}}</md-option>
-                  </md-select>
-                </md-field>
+              <md-field :class="getValidationClass('publisher')">
+                <label for="publisher">PUBLISHER</label>
+                <md-input name="publisher" id="publisher" v-model="product.publisher"></md-input>
+                <span class="md-error" v-if="!$v.product.publisher.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="branch">BRANCH</label>
-                  <md-select v-model="product.branch" name="branch" id="branch">
+              <md-field :class="getValidationClass('sem')">
+                <label for="sem">SEM</label>
+                <md-select v-model="product.sem" name="sem" id="sem">
+                  <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
+              </md-field>
+
+              <md-field :class="getValidationClass('branch')">
+                <label for="branch">BRANCH</label>
+                <md-select v-model="product.branch" name="branch" id="branch">
                   <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-                  </md-select>
-                </md-field>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="donation">TYPE</label>
-                  <md-select v-model="product.donation" name="donation" id="donation">
-                    <md-option value="1">Donation</md-option>
-                    <md-option value="0">Trade</md-option>
-                  </md-select>
-                </md-field>
+              <md-field :class="getValidationClass('donation')">
+                <label for="donation">TYPE</label>
+                <md-select v-model="product.donation" name="donation" id="donation">
+                  <md-option value="1">Donation</md-option>
+                  <md-option value="0">Trade</md-option>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.donation.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="phone">CONTACT</label>
-                  <md-input
-                    name="phone"
-                    id="phone"
-                    v-model="product.phone"
-                    v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"
-                  ></md-input>
-                  <div v-if="errors.has('book.phone')">{{errors.first('book.phone')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('phone')">
+                <label for="phone">CONTACT</label>
+                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
+                <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label>IMAGE</label>
-                  <md-input type="file" @change="onFileSelected" accept="image/*" />
-                </md-field>
+              <md-field :class="getValidationClassImage('selectedFile')">
+                <label>IMAGE</label>
+                <md-file  @change="onFileSelected" accept="image/*" />
+                <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
+              </md-field>
 
-                <span>
-                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-                </span>
+              <span>
+                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
+              </span>
 
-              </form>
-            </div>
-          </md-tab>
+            </form>
+          </div>
+        </md-tab>
 
-          <md-tab md-label="LINK">
-            <div v-if="!submitted">
-              <form @submit.prevent="saveDrive('drive')" data-vv-scope="drive">
+        <md-tab md-label="LINK">
+          <div v-if="!submitted">
+            <form @submit.prevent="validateLink">
 
-                <md-field class="form-data">
-                  <label for="title">TITLE</label>
-                  <md-input
-                    name="title"
-                    id="title"
-                    v-model="product.title"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('drive.title')">{{errors.first('drive.title')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('title')">
+                <label for="title">TITLE</label>
+                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="url">LINK</label>
-                  <md-input
-                    name="url"
-                    id="url"
-                    v-model="product.url"
-                    v-validate="{required:true,url: {require_protocol: true }}"
-                  ></md-input>
-                  <div v-if="errors.has('drive.url')">{{errors.first('drive.url')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('link')">
+                <label for="link">LINK</label>
+                <md-input name="link" id="link" v-model="product.link"></md-input>
+                <span class="md-error" v-if="!$v.product.link.required">Required field</span>
+                <span class="md-error" v-if="!$v.product.link.url">Invalid URL</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="description">DESCRIPTION</label>
-                  <md-input
-                    name="description"
-                    id="description"
-                    v-model="product.description"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('drive.description')">{{errors.first('drive.description')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('description')">
+                <label for="description">DESCRIPTION</label>
+                <md-input name="description" id="description" v-model="product.description"></md-input>
+                <span class="md-error" v-if="!$v.product.description.required">The description is required</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="sem">SEM</label>
-                  <md-select v-model="product.sem" name="sem" id="sem">
-                    <md-option
-                    v-for="semester in semesters"
-                    :value="semester"
-                    :key="semester"
-                  >{{semester}}</md-option>
-                  </md-select>
-                </md-field>
+              <md-field :class="getValidationClass('sem')">
+                <label for="sem">SEM</label>
+                <md-select v-model="product.sem" name="sem" id="sem">
+                  <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="branch">BRANCH</label>
-                  <md-select v-model="product.branch" name="branch" id="branch">
-                    <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-                  </md-select>
-                </md-field>
+              <md-field :class="getValidationClass('branch')">
+                <label for="branch">BRANCH</label>
+                <md-select v-model="product.branch" name="branch" id="branch">
+                  <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
+              </md-field>
 
-                <span>
-                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-                </span>
+              <span>
+                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
+              </span>
 
-              </form>
-            </div>
-          </md-tab>
+            </form>
+          </div>
+        </md-tab>
 
-          <md-tab md-label="OTHERS">
-            <div v-if="!submitted">
-              <form @submit.prevent="saveOther('other')" data-vv-scope="other">
+        <md-tab md-label="OTHER">
+          <div v-if="!submitted">
+            <form @submit.prevent="validateOther">
 
-                <md-field class="form-data">
-                  <label for="title">TITLE</label>
-                  <md-input
-                    name="title"
-                    id="title"
-                    v-model="product.title"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('other.title')">{{errors.first('other.title')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('title')">
+                <label for="title">TITLE</label>
+                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="description">DESCRIPTION</label>
-                  <md-input
-                    name="description"
-                    id="description"
-                    v-model="product.description"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('other.description')">{{errors.first('other.description')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('description')">
+                <label for="description">DESCRIPTION</label>
+                <md-input name="description" id="description" v-model="product.description"></md-input>
+                <span class="md-error" v-if="!$v.product.description.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="sem">SEM</label>
-                  <md-select v-model="product.sem" name="sem" id="sem">
-                    <md-option
-                    v-for="semester in semesters"
-                    :value="semester"
-                    :key="semester"
-                  >{{semester}}</md-option>
-                  </md-select>
-                </md-field>
+              <md-field :class="getValidationClass('sem')">
+                <label for="sem">SEM</label>
+                <md-select v-model="product.sem" name="sem" id="sem">
+                  <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="branch">BRANCH</label>
-                  <md-select v-model="product.branch" name="branch" id="branch">
-                    <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-                  </md-select>
-                </md-field>
+              <md-field :class="getValidationClass('branch')">
+                <label for="branch">BRANCH</label>
+                <md-select v-model="product.branch" name="branch" id="branch">
+                  <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="donation">TYPE</label>
-                  <md-select v-model="product.donation" name="donation" id="donation">
-                    <md-option value="1">Donation</md-option>
-                    <md-option value="0">Trade</md-option>
-                  </md-select>
-                </md-field>
+              <md-field :class="getValidationClass('donation')">
+                <label for="donation">TYPE</label>
+                <md-select v-model="product.donation" name="donation" id="donation">
+                  <md-option value="1">Donation</md-option>
+                  <md-option value="0">Trade</md-option>
+                </md-select>
+                <span class="md-error" v-if="!$v.product.donation.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="phone">CONTACT</label>
-                  <md-input
-                    name="phone"
-                    id="phone"
-                    v-model="product.phone"
-                    v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"
-                  ></md-input>
-                  <div v-if="errors.has('other.phone')">{{errors.first('other.phone')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('phone')">
+                <label for="phone">CONTACT</label>
+                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
+                <span class="md-error" v-else-if= "!$v.product.phone.number">Invalid contact</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label>IMAGE</label>
-                  <md-input type="file" @change="onFileSelected" accept="image/*" />
-                </md-field>
+              <md-field :class="getValidationClassImage('selectedFile')">
+                <label>IMAGE</label>
+                <md-file  @change="onFileSelected" accept="image/*" />
+                <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
+              </md-field>
 
-                <span>
-                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-                </span>
+              <span>
+                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
+              </span>
 
-              </form>
-            </div>
-          </md-tab>
+            </form>
+          </div>
+        </md-tab>
 
-          <md-tab md-label="LOST N FOUND">
-            <div v-if="!submitted">
-              <form @submit.prevent="saveLostfound('lostfound')" data-vv-scope="lostfound">
+        <md-tab md-label="LOST N FOUND">
+          <div v-if="!submitted">
+            <form @submit.prevent="validateLost">
 
-                <md-field class="form-data">
-                  <label for="title">TITLE</label>
-                  <md-input
-                    name="title"
-                    id="title"
-                    v-model="product.title"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('lostfound.title')">{{errors.first('lostfound.title')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('title')">
+                <label for="title">TITLE</label>
+                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="description">DESCRIPTION</label>
-                  <md-input
-                    name="description"
-                    id="description"
-                    v-model="product.description"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('lostfound.description')">{{errors.first('lostfound.description')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('description')">
+                <label for="description">DESCRIPTION</label>
+                <md-input name="description" id="description" v-model="product.description"></md-input>
+                <span class="md-error" v-if="!$v.product.description.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label for="location">LOCATION</label>
-                  <md-input
-                    name="location"
-                    id="location"
-                    v-model="product.location"
-                    v-validate="{required:true}"
-                  ></md-input>
-                  <div v-if="errors.has('lostfound.location')">{{errors.first('lostfound.location')}}</div>
-                </md-field>
 
-                <md-field class="form-data">
-                  <label for="phone">CONTACT</label>
-                  <md-input
-                    name="phone"
-                    id="phone"
-                    v-model="product.phone"
-                    v-validate="{required:true, regex: /^(\+91( )?)?[0-9]{10}$/}"
-                  ></md-input>
-                  <div v-if="errors.has('lostfound.phone')">{{errors.first('lostfound.phone')}}</div>
-                </md-field>
+              <md-field :class="getValidationClass('location')">
+                <label for="location">LOCATION</label>
+                <md-input name="location" id="location" v-model="product.location" ></md-input>
+                <span class="md-error" v-if="!$v.product.location.required">Required field</span>
+              </md-field>
 
-                <md-field class="form-data">
-                  <label>IMAGE</label>
-                  <md-input type="file" @change="onFileSelected" accept="image/*" />
-                </md-field>
+              <md-field :class="getValidationClass('phone')">
+                <label for="phone">CONTACT</label>
+                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
+                <span class="md-error" v-else-if= "!$v.product.phone.number">Invalid contact</span>
+              </md-field>
 
-                <span>
-                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                  <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-                </span>
+              <md-field :class="getValidationClassImage('selectedFile')">
+                <label>IMAGE</label>
+                <md-file  @change="onFileSelected" accept="image/*" />
+                <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
+              </md-field>
 
-              </form>
-            </div>
-          </md-tab>
+              <span>
+                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
+              </span>
 
-        </md-tabs>
-      </md-dialog-content>
-    </md-dialog>
-  </div>
+            </form>
+          </div>
+        </md-tab>
+
+
+      </md-tabs>
+    </md-dialog-content>
+  </md-dialog>
+</div>
 </template>
- 
+
 <script>
 import axios from "axios";
+import {validationMixin} from 'vuelidate'
+import {
+  required,
+  url
+} from 'vuelidate/lib/validators'
 
 export default {
   name: "add-product",
+  mixins: [validationMixin],
   data() {
     return {
       product: {},
@@ -332,139 +275,257 @@ export default {
       ]
     };
   },
+  validations: {
+    selectedFile: {
+      required
+    },
+    product: {
+      title: {
+        required
+      },
+      author: {
+        required,
+        alphabet(author){
+          return(/^[a-zA-Z ]*$/.test(author));
+        }
+      },
+      publisher: {
+        required
+      },
+      branch: {
+        required
+      },
+      sem: {
+        required
+      },
+      link: {
+        required,
+        url
+      },
+      description: {
+        required
+      },
+      donation: {
+        required
+      },
+      location: {
+        required
+      },
+      phone: {
+        required,
+        number(phone){
+          return(/^(\+91( )?)?[789][0-9]{9}$/.test(phone));
+        }
+      }
+    }
+  },
   methods: {
+    getValidationClass(fieldName) {
+      const field = this.$v.product[fieldName]
+      if (field) {
+        return {
+          'md-invalid': field.$invalid && field.$dirty
+        }
+      }
+    },
+
+    getValidationClassImage(fieldName) {
+      const field = this.$v[fieldName]
+      if (field) {
+        return {
+          'md-invalid': field.$invalid && field.$dirty
+        }
+      }
+    },
+
     onFileSelected(event) {
       console.log("set file");
       console.log(event);
       this.selectedFile = event.target.files[0];
     },
-    saveBook(scope) {
-      this.$validator.validateAll(scope).then(async isValid => {
-        if (isValid) {
-          
-          const fd = new FormData();
-          // image stuff
-          fd.append("image", this.selectedFile, this.selectedFile.name);
-          // other data
-          fd.append("title", this.product.title);
-          fd.append("author", this.product.author);
-          fd.append("sem", this.product.sem);
-          fd.append("branch", this.product.branch);
-          fd.append("publisher", this.product.publisher);
-          fd.append("donation", this.product.donation);
-          fd.append("phone", this.product.phone);
-          fd.append("userId", this.$store.state.userId);
 
-          try {
-            await axios
-              .post("http://localhost:8080/api/things/upload-book", fd, {
-                headers: {
-                  "content-type": undefined,
-                  Authorization: "Bearer " + this.$store.state.token
-                }
-              })
-              .then(response => {
-                this.book.id = response.data.id;
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          } catch (err) {
-            console.log(err);
-          }
+    validateBook() {
+      this.$v.product.title.$touch();
+      this.$v.product.author.$touch();
+      this.$v.product.publisher.$touch();
+      this.$v.product.sem.$touch();
+      this.$v.product.branch.$touch();
+      this.$v.product.donation.$touch();
+      this.$v.product.phone.$touch();
+      this.$v.selectedFile.$touch();
 
-          this.submitted = true;
-          this.$router.push("/");
-          location.reload();
-        }
-      });
+      if (!this.$v.product.title.$invalid ||
+          !this.$v.product.author.$invalid || 
+          !this.$v.product.publisher.$invalid || 
+          !this.$v.product.sem.$invalid || 
+          !this.$v.product.branch.$invalid || 
+          !this.$v.product.donation.$invalid || 
+          !this.$v.product.phone.$invalid ||
+          !this.$v.selectedFile.$invalid() ) {
+                this.saveBook()
+      }
     },
 
-    saveDrive(scope) {
-      this.$validator.validateAll(scope).then(async isValid => {
-        if (isValid) {
-          
-          const fd = new FormData();
-    
-          fd.append("title", this.product.title);
-          fd.append("sem", this.product.sem);
-          fd.append("branch", this.product.branch);
-          fd.append("url", this.product.url);
-          fd.append("description", this.product.description);
-          fd.append("userId", this.$store.state.userId);
+    validateLink() {
+      this.$v.product.title.$touch();
+      this.$v.product.link.$touch();
+      this.$v.product.description.$touch();
+      this.$v.product.sem.$touch();
+      this.$v.product.branch.$touch();
 
-          try {
-            await axios
-              .post("http://localhost:8080/api/things/upload-drive", fd, {
-                headers: {
-                  "content-type": undefined,
-                  Authorization: "Bearer " + this.$store.state.token
-                }
-              })
-              .then(response => {
-                alert()
-                this.book.id = response.data.id;
-              })
-              .catch(e => {
-                alert(e)
-                console.log(e);
-              });
-          } catch (err) {
-            console.log(err);
-          }
-
-          this.submitted = true;
-          this.$router.push("/");
-          location.reload();
-        }
-      });
+      if (!this.$v.product.title.$invalid || 
+          !this.$v.product.link.$invalid || 
+          !this.$v.product.description.$invalid || 
+          !this.$v.product.sem.$invalid || 
+          !this.$v.product.branch.$invalid) {
+                this.saveDrive()
+      }
     },
 
-    saveOther(scope) {
-      this.$validator.validateAll(scope).then(async isValid => {
-        if (isValid) {
-          
-          const fd = new FormData();
-          // image stuff
-          fd.append("image", this.selectedFile, this.selectedFile.name);
-          // other data
-          fd.append("title", this.product.title);
-          fd.append("sem", this.product.sem);
-          fd.append("branch", this.product.branch);
-          fd.append("description", this.product.description);
-          fd.append("donation", this.product.donation);
-          fd.append("phone", this.product.phone);
-          fd.append("userId", this.$store.state.userId);
+    validateOther() {
+      this.$v.product.title.$touch();
+      this.$v.product.description.$touch();
+      this.$v.product.sem.$touch();
+      this.$v.product.branch.$touch();
+      this.$v.product.donation.$touch();
+      this.$v.product.phone.$touch();
+      this.$v.selectedFile.$touch();
 
-          try {
-            await axios
-              .post("http://localhost:8080/api/things/upload-other", fd, {
-                headers: {
-                  "content-type": undefined,
-                  Authorization: "Bearer " + this.$store.state.token
-                }
-              })
-              .then(response => {
-                this.book.id = response.data.id;
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          } catch (err) {
-            console.log(err);
-          }
-
-          this.submitted = true;
-          this.$router.push("/");
-          location.reload();
-        }
-      });
+      if (!this.$v.product.title.$invalid || 
+          !this.$v.product.description.$invalid || 
+          !this.$v.product.sem.$invalid || 
+          !this.$v.product.branch.$invalid || 
+          !this.$v.product.donation.$invalid || 
+          !this.$v.product.phone.$invalid ||
+          !this.$v.selectedFile.$invalid() ) {
+              this.saveOther()
+      }
     },
 
-    saveLostfound(scope) {
-      this.$validator.validateAll(scope).then(async isValid => {
-        if (isValid) {
-          
+    validateLost() {
+      this.$v.product.title.$touch();
+      this.$v.product.description.$touch();
+      this.$v.product.location.$touch();
+      this.$v.product.phone.$touch();
+
+      if (!this.$v.product.title.$invalid ||
+          !this.$v.product.description.$invalid || 
+          !this.$v.product.location.$invalid || 
+          !this.$v.product.phone.$invalid ||
+          !this.$v.selectedFile.$invalid() ) {
+              this.saveLostfound()
+      }
+    },
+
+    saveBook() {
+
+      const fd = new FormData();
+      // image stuff
+      fd.append("image", this.selectedFile, this.selectedFile.name);
+      // other data
+      fd.append("title", this.product.title);
+      fd.append("author", this.product.author);
+      fd.append("sem", this.product.sem);
+      fd.append("branch", this.product.branch);
+      fd.append("publisher", this.product.publisher);
+      fd.append("donation", this.product.donation);
+      fd.append("phone", this.product.phone);
+      fd.append("userId", this.$store.state.userId);
+
+      try {
+        axios
+          .post("http://localhost:8080/api/things/upload-book", fd, {
+            headers: {
+              "content-type": undefined,
+              Authorization: "Bearer " + this.$store.state.token
+            }
+          })
+          .then(response => {
+            this.book.id = response.data.id;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+
+      this.submitted = true;
+      this.$router.push("/");
+      location.reload();
+    },
+
+    saveDrive() {
+
+      const fd = new FormData();
+
+      fd.append("title", this.product.title);
+      fd.append("sem", this.product.sem);
+      fd.append("branch", this.product.branch);
+      fd.append("url", this.product.link);
+      fd.append("description", this.product.description);
+      fd.append("userId", this.$store.state.userId);
+      try {
+        axios
+          .post("http://localhost:8080/api/things/upload-drive", fd, {
+            headers: {
+              "content-type": undefined,
+              Authorization: "Bearer " + this.$store.state.token
+            }
+          })
+          .then(response => {
+
+            this.book.id = response.data.id;
+          })
+          .catch(e => {
+
+            console.log(e);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+      this.submitted = true;
+      this.$router.push("/");
+      location.reload();
+    },
+
+    saveOther() {
+
+      const fd = new FormData();
+      // image stuff
+      fd.append("image", this.selectedFile, this.selectedFile.name);
+      // other data
+      fd.append("title", this.product.title);
+      fd.append("sem", this.product.sem);
+      fd.append("branch", this.product.branch);
+      fd.append("description", this.product.description);
+      fd.append("donation", this.product.donation);
+      fd.append("phone", this.product.phone);
+      fd.append("userId", this.$store.state.userId);
+      try {
+        axios
+          .post("http://localhost:8080/api/things/upload-other", fd, {
+            headers: {
+              "content-type": undefined,
+              Authorization: "Bearer " + this.$store.state.token
+            }
+          })
+          .then(response => {
+            this.book.id = response.data.id;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+      this.submitted = true;
+      this.$router.push("/");
+      location.reload();
+    },
+
+    saveLostfound() {
+
           const fd = new FormData();
           // image stuff
           fd.append("image", this.selectedFile, this.selectedFile.name);
@@ -474,9 +535,8 @@ export default {
           fd.append("location", this.product.location);
           fd.append("phone", this.product.phone);
           fd.append("userId", this.$store.state.userId);
-
           try {
-            await axios
+             axios
               .post("http://localhost:8080/api/lostfound/post", fd, {
                 headers: {
                   "content-type": undefined,
@@ -492,12 +552,9 @@ export default {
           } catch (err) {
             console.log(err);
           }
-
           this.submitted = true;
           this.$router.push("/");
           location.reload();
-        }
-      });
     },
 
     newProduct() {
@@ -507,7 +564,7 @@ export default {
   }
 };
 </script>
- 
+
 <style>
 #cancel-btn {
   float: right;
