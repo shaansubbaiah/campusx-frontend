@@ -1,257 +1,250 @@
 <template>
-<div>
-  <md-dialog :md-active="true">
-    <md-dialog-content class="md-scrollbar">
-      <md-dialog-title>
-        POST AN AD!
-        <md-button class="md-icon-button" id="cancel-btn">
-          <router-link to="/">
-            <md-icon>cancel</md-icon>
-          </router-link>
-        </md-button>
-      </md-dialog-title>
-      <md-tabs md-dynamic-height>
+  <div>
+    <md-dialog :md-active="true">
+      <md-dialog-content>
+        <md-dialog-title>POST AN AD!</md-dialog-title>
+        <md-tabs md-dynamic-height>
+          <md-tab md-label="BOOK">
+            <div v-if="!submitted">
+              <form @submit.prevent="validateBook">
+                <md-field :class="getValidationClass('title')">
+                  <label for="title">TITLE</label>
+                  <md-input name="title" id="title" v-model="product.title"></md-input>
+                  <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+                </md-field>
 
-      <md-tab md-label="BOOK">
-          <div v-if="!submitted">
-            <form @submit.prevent="validateBook">
+                <md-field :class="getValidationClass('author')">
+                  <label for="author">AUTHOR</label>
+                  <md-input name="author" id="author" v-model="product.author"></md-input>
+                  <span class="md-error" v-if="!$v.product.author.required">Required field</span>
+                  <span class="md-error" v-else-if="!$v.product.author.alphabet">Invalid characters</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('title')">
-                <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
-                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('publisher')">
+                  <label for="publisher">PUBLISHER</label>
+                  <md-input name="publisher" id="publisher" v-model="product.publisher"></md-input>
+                  <span class="md-error" v-if="!$v.product.publisher.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('author')">
-                <label for="author">AUTHOR</label>
-                <md-input name="author" id="author" v-model="product.author"></md-input>
-                <span class="md-error" v-if="!$v.product.author.required">Required field</span>
-                <span class="md-error" v-else-if="!$v.product.author.alphabet">Invalid characters</span>
-              </md-field>
+                <md-field :class="getValidationClass('sem')">
+                  <label for="sem">SEM</label>
+                  <md-select v-model="product.sem" name="sem" id="sem">
+                    <md-option
+                      v-for="semester in semesters"
+                      :value="semester"
+                      :key="semester"
+                    >{{semester}}</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('publisher')">
-                <label for="publisher">PUBLISHER</label>
-                <md-input name="publisher" id="publisher" v-model="product.publisher"></md-input>
-                <span class="md-error" v-if="!$v.product.publisher.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('branch')">
+                  <label for="branch">BRANCH</label>
+                  <md-select v-model="product.branch" name="branch" id="branch">
+                    <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('sem')">
-                <label for="sem">SEM</label>
-                <md-select v-model="product.sem" name="sem" id="sem">
-                  <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('donation')">
+                  <label for="donation">TYPE</label>
+                  <md-select v-model="product.donation" name="donation" id="donation">
+                    <md-option value="1">Donation</md-option>
+                    <md-option value="0">Trade</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.donation.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('branch')">
-                <label for="branch">BRANCH</label>
-                <md-select v-model="product.branch" name="branch" id="branch">
-                  <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('phone')">
+                  <label for="phone">CONTACT</label>
+                  <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                  <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
+                  <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('donation')">
-                <label for="donation">TYPE</label>
-                <md-select v-model="product.donation" name="donation" id="donation">
-                  <md-option value="1">Donation</md-option>
-                  <md-option value="0">Trade</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.donation.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClassImage('selectedFile')">
+                  <label>IMAGE</label>
+                  <md-file @change="onFileSelected" accept="image/*" />
+                  <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('phone')">
-                <label for="phone">CONTACT</label>
-                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
-                <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
-                <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
-              </md-field>
+                <span>
+                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button class="md-accent" to="/">Cancel</md-button>
+                </span>
+              </form>
+            </div>
+          </md-tab>
 
-              <md-field :class="getValidationClassImage('selectedFile')">
-                <label>IMAGE</label>
-                <md-file  @change="onFileSelected" accept="image/*" />
-                <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
-              </md-field>
+          <md-tab md-label="LINK">
+            <div v-if="!submitted">
+              <form @submit.prevent="validateLink">
+                <md-field :class="getValidationClass('title')">
+                  <label for="title">TITLE</label>
+                  <md-input name="title" id="title" v-model="product.title"></md-input>
+                  <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+                </md-field>
 
-              <span>
-                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-              </span>
+                <md-field :class="getValidationClass('link')">
+                  <label for="link">LINK</label>
+                  <md-input name="link" id="link" v-model="product.link"></md-input>
+                  <span class="md-error" v-if="!$v.product.link.required">Required field</span>
+                  <span class="md-error" v-if="!$v.product.link.url">Invalid URL</span>
+                </md-field>
 
-            </form>
-          </div>
-        </md-tab>
+                <md-field :class="getValidationClass('description')">
+                  <label for="description">DESCRIPTION</label>
+                  <md-input name="description" id="description" v-model="product.description"></md-input>
+                  <span
+                    class="md-error"
+                    v-if="!$v.product.description.required"
+                  >The description is required</span>
+                </md-field>
 
-        <md-tab md-label="LINK">
-          <div v-if="!submitted">
-            <form @submit.prevent="validateLink">
+                <md-field :class="getValidationClass('sem')">
+                  <label for="sem">SEM</label>
+                  <md-select v-model="product.sem" name="sem" id="sem">
+                    <md-option
+                      v-for="semester in semesters"
+                      :value="semester"
+                      :key="semester"
+                    >{{semester}}</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('title')">
-                <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
-                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('branch')">
+                  <label for="branch">BRANCH</label>
+                  <md-select v-model="product.branch" name="branch" id="branch">
+                    <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('link')">
-                <label for="link">LINK</label>
-                <md-input name="link" id="link" v-model="product.link"></md-input>
-                <span class="md-error" v-if="!$v.product.link.required">Required field</span>
-                <span class="md-error" v-if="!$v.product.link.url">Invalid URL</span>
-              </md-field>
+                <span>
+                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button class="md-accent" to="/">Cancel</md-button>
+                </span>
+              </form>
+            </div>
+          </md-tab>
 
-              <md-field :class="getValidationClass('description')">
-                <label for="description">DESCRIPTION</label>
-                <md-input name="description" id="description" v-model="product.description"></md-input>
-                <span class="md-error" v-if="!$v.product.description.required">The description is required</span>
-              </md-field>
+          <md-tab md-label="OTHER">
+            <div v-if="!submitted">
+              <form @submit.prevent="validateOther">
+                <md-field :class="getValidationClass('title')">
+                  <label for="title">TITLE</label>
+                  <md-input name="title" id="title" v-model="product.title"></md-input>
+                  <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('sem')">
-                <label for="sem">SEM</label>
-                <md-select v-model="product.sem" name="sem" id="sem">
-                  <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('description')">
+                  <label for="description">DESCRIPTION</label>
+                  <md-input name="description" id="description" v-model="product.description"></md-input>
+                  <span class="md-error" v-if="!$v.product.description.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('branch')">
-                <label for="branch">BRANCH</label>
-                <md-select v-model="product.branch" name="branch" id="branch">
-                  <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('sem')">
+                  <label for="sem">SEM</label>
+                  <md-select v-model="product.sem" name="sem" id="sem">
+                    <md-option
+                      v-for="semester in semesters"
+                      :value="semester"
+                      :key="semester"
+                    >{{semester}}</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
+                </md-field>
 
-              <span>
-                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-              </span>
+                <md-field :class="getValidationClass('branch')">
+                  <label for="branch">BRANCH</label>
+                  <md-select v-model="product.branch" name="branch" id="branch">
+                    <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
+                </md-field>
 
-            </form>
-          </div>
-        </md-tab>
+                <md-field :class="getValidationClass('donation')">
+                  <label for="donation">TYPE</label>
+                  <md-select v-model="product.donation" name="donation" id="donation">
+                    <md-option value="1">Donation</md-option>
+                    <md-option value="0">Trade</md-option>
+                  </md-select>
+                  <span class="md-error" v-if="!$v.product.donation.required">Required field</span>
+                </md-field>
 
-        <md-tab md-label="OTHER">
-          <div v-if="!submitted">
-            <form @submit.prevent="validateOther">
+                <md-field :class="getValidationClass('phone')">
+                  <label for="phone">CONTACT</label>
+                  <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                  <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
+                  <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('title')">
-                <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
-                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClassImage('selectedFile')">
+                  <label>IMAGE</label>
+                  <md-file @change="onFileSelected" accept="image/*" />
+                  <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('description')">
-                <label for="description">DESCRIPTION</label>
-                <md-input name="description" id="description" v-model="product.description"></md-input>
-                <span class="md-error" v-if="!$v.product.description.required">Required field</span>
-              </md-field>
+                <span>
+                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button class="md-accent" to="/">Cancel</md-button>
+                </span>
+              </form>
+            </div>
+          </md-tab>
 
-              <md-field :class="getValidationClass('sem')">
-                <label for="sem">SEM</label>
-                <md-select v-model="product.sem" name="sem" id="sem">
-                  <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.sem.required">Required field</span>
-              </md-field>
+          <md-tab md-label="LOST N FOUND">
+            <div v-if="!submitted">
+              <form @submit.prevent="validateLost">
+                <md-field :class="getValidationClass('title')">
+                  <label for="title">TITLE</label>
+                  <md-input name="title" id="title" v-model="product.title"></md-input>
+                  <span class="md-error" v-if="!$v.product.title.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('branch')">
-                <label for="branch">BRANCH</label>
-                <md-select v-model="product.branch" name="branch" id="branch">
-                  <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('description')">
+                  <label for="description">DESCRIPTION</label>
+                  <md-input name="description" id="description" v-model="product.description"></md-input>
+                  <span class="md-error" v-if="!$v.product.description.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('donation')">
-                <label for="donation">TYPE</label>
-                <md-select v-model="product.donation" name="donation" id="donation">
-                  <md-option value="1">Donation</md-option>
-                  <md-option value="0">Trade</md-option>
-                </md-select>
-                <span class="md-error" v-if="!$v.product.donation.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClass('location')">
+                  <label for="location">LOCATION</label>
+                  <md-input name="location" id="location" v-model="product.location"></md-input>
+                  <span class="md-error" v-if="!$v.product.location.required">Required field</span>
+                </md-field>
 
-              <md-field :class="getValidationClass('phone')">
-                <label for="phone">CONTACT</label>
-                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
-                <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
-                <span class="md-error" v-else-if= "!$v.product.phone.number">Invalid contact</span>
-              </md-field>
+                <md-field :class="getValidationClass('phone')">
+                  <label for="phone">CONTACT</label>
+                  <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                  <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
+                  <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
+                </md-field>
 
-              <md-field :class="getValidationClassImage('selectedFile')">
-                <label>IMAGE</label>
-                <md-file  @change="onFileSelected" accept="image/*" />
-                <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
-              </md-field>
+                <md-field :class="getValidationClassImage('selectedFile')">
+                  <label>IMAGE</label>
+                  <md-file @change="onFileSelected" accept="image/*" />
+                  <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
+                </md-field>
 
-              <span>
-                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-              </span>
-
-            </form>
-          </div>
-        </md-tab>
-
-        <md-tab md-label="LOST N FOUND">
-          <div v-if="!submitted">
-            <form @submit.prevent="validateLost">
-
-              <md-field :class="getValidationClass('title')">
-                <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
-                <span class="md-error" v-if="!$v.product.title.required">Required field</span>
-              </md-field>
-
-              <md-field :class="getValidationClass('description')">
-                <label for="description">DESCRIPTION</label>
-                <md-input name="description" id="description" v-model="product.description"></md-input>
-                <span class="md-error" v-if="!$v.product.description.required">Required field</span>
-              </md-field>
-
-
-              <md-field :class="getValidationClass('location')">
-                <label for="location">LOCATION</label>
-                <md-input name="location" id="location" v-model="product.location" ></md-input>
-                <span class="md-error" v-if="!$v.product.location.required">Required field</span>
-              </md-field>
-
-              <md-field :class="getValidationClass('phone')">
-                <label for="phone">CONTACT</label>
-                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
-                <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
-                <span class="md-error" v-else-if= "!$v.product.phone.number">Invalid contact</span>
-              </md-field>
-
-              <md-field :class="getValidationClassImage('selectedFile')">
-                <label>IMAGE</label>
-                <md-file  @change="onFileSelected" accept="image/*" />
-                <span class="md-error" v-if="!$v.selectedFile.required">Required field</span>
-              </md-field>
-
-              <span>
-                <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
-                <md-button v-on:click="newProduct" class="md-dense md-raised md-primary">CLEAR</md-button>
-              </span>
-
-            </form>
-          </div>
-        </md-tab>
-
-
-      </md-tabs>
-    </md-dialog-content>
-  </md-dialog>
-</div>
+                <span>
+                  <md-button type="submit" class="md-dense md-raised md-primary">SUBMIT</md-button>
+                  <md-button class="md-accent" to="/">Cancel</md-button>
+                </span>
+              </form>
+            </div>
+          </md-tab>
+        </md-tabs>
+      </md-dialog-content>
+    </md-dialog>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
-import {validationMixin} from 'vuelidate'
-import {
-  required,
-  url
-} from 'vuelidate/lib/validators'
+import { validationMixin } from "vuelidate";
+import { required, url } from "vuelidate/lib/validators";
 
 export default {
   name: "add-product",
@@ -285,8 +278,8 @@ export default {
       },
       author: {
         required,
-        alphabet(author){
-          return(/^[a-zA-Z ]*$/.test(author));
+        alphabet(author) {
+          return /^[a-zA-Z ]*$/.test(author);
         }
       },
       publisher: {
@@ -313,28 +306,28 @@ export default {
       },
       phone: {
         required,
-        number(phone){
-          return(/^(\+91( )?)?[789][0-9]{9}$/.test(phone));
+        number(phone) {
+          return /^(\+91( )?)?[0-9]{10}$/g.test(phone);
         }
       }
     }
   },
   methods: {
     getValidationClass(fieldName) {
-      const field = this.$v.product[fieldName]
+      const field = this.$v.product[fieldName];
       if (field) {
         return {
-          'md-invalid': field.$invalid && field.$dirty
-        }
+          "md-invalid": field.$invalid && field.$dirty
+        };
       }
     },
 
     getValidationClassImage(fieldName) {
-      const field = this.$v[fieldName]
+      const field = this.$v[fieldName];
       if (field) {
         return {
-          'md-invalid': field.$invalid && field.$dirty
-        }
+          "md-invalid": field.$invalid && field.$dirty
+        };
       }
     },
 
@@ -354,15 +347,17 @@ export default {
       this.$v.product.phone.$touch();
       this.$v.selectedFile.$touch();
 
-      if (!this.$v.product.title.$invalid ||
-          !this.$v.product.author.$invalid || 
-          !this.$v.product.publisher.$invalid || 
-          !this.$v.product.sem.$invalid || 
-          !this.$v.product.branch.$invalid || 
-          !this.$v.product.donation.$invalid || 
-          !this.$v.product.phone.$invalid ||
-          !this.$v.selectedFile.$invalid() ) {
-                this.saveBook()
+      if (
+        !this.$v.product.title.$invalid ||
+        !this.$v.product.author.$invalid ||
+        !this.$v.product.publisher.$invalid ||
+        !this.$v.product.sem.$invalid ||
+        !this.$v.product.branch.$invalid ||
+        !this.$v.product.donation.$invalid ||
+        !this.$v.product.phone.$invalid ||
+        !this.$v.selectedFile.$invalid()
+      ) {
+        this.saveBook();
       }
     },
 
@@ -373,12 +368,14 @@ export default {
       this.$v.product.sem.$touch();
       this.$v.product.branch.$touch();
 
-      if (!this.$v.product.title.$invalid || 
-          !this.$v.product.link.$invalid || 
-          !this.$v.product.description.$invalid || 
-          !this.$v.product.sem.$invalid || 
-          !this.$v.product.branch.$invalid) {
-                this.saveDrive()
+      if (
+        !this.$v.product.title.$invalid ||
+        !this.$v.product.link.$invalid ||
+        !this.$v.product.description.$invalid ||
+        !this.$v.product.sem.$invalid ||
+        !this.$v.product.branch.$invalid
+      ) {
+        this.saveDrive();
       }
     },
 
@@ -391,14 +388,16 @@ export default {
       this.$v.product.phone.$touch();
       this.$v.selectedFile.$touch();
 
-      if (!this.$v.product.title.$invalid || 
-          !this.$v.product.description.$invalid || 
-          !this.$v.product.sem.$invalid || 
-          !this.$v.product.branch.$invalid || 
-          !this.$v.product.donation.$invalid || 
-          !this.$v.product.phone.$invalid ||
-          !this.$v.selectedFile.$invalid() ) {
-              this.saveOther()
+      if (
+        !this.$v.product.title.$invalid ||
+        !this.$v.product.description.$invalid ||
+        !this.$v.product.sem.$invalid ||
+        !this.$v.product.branch.$invalid ||
+        !this.$v.product.donation.$invalid ||
+        !this.$v.product.phone.$invalid ||
+        !this.$v.selectedFile.$invalid()
+      ) {
+        this.saveOther();
       }
     },
 
@@ -408,17 +407,18 @@ export default {
       this.$v.product.location.$touch();
       this.$v.product.phone.$touch();
 
-      if (!this.$v.product.title.$invalid ||
-          !this.$v.product.description.$invalid || 
-          !this.$v.product.location.$invalid || 
-          !this.$v.product.phone.$invalid ||
-          !this.$v.selectedFile.$invalid() ) {
-              this.saveLostfound()
+      if (
+        !this.$v.product.title.$invalid ||
+        !this.$v.product.description.$invalid ||
+        !this.$v.product.location.$invalid ||
+        !this.$v.product.phone.$invalid ||
+        !this.$v.selectedFile.$invalid()
+      ) {
+        this.saveLostfound();
       }
     },
 
     saveBook() {
-
       const fd = new FormData();
       // image stuff
       fd.append("image", this.selectedFile, this.selectedFile.name);
@@ -456,7 +456,6 @@ export default {
     },
 
     saveDrive() {
-
       const fd = new FormData();
 
       fd.append("title", this.product.title);
@@ -474,11 +473,9 @@ export default {
             }
           })
           .then(response => {
-
             this.book.id = response.data.id;
           })
           .catch(e => {
-
             console.log(e);
           });
       } catch (err) {
@@ -490,7 +487,6 @@ export default {
     },
 
     saveOther() {
-
       const fd = new FormData();
       // image stuff
       fd.append("image", this.selectedFile, this.selectedFile.name);
@@ -525,41 +521,35 @@ export default {
     },
 
     saveLostfound() {
-
-          const fd = new FormData();
-          // image stuff
-          fd.append("image", this.selectedFile, this.selectedFile.name);
-          // other data
-          fd.append("title", this.product.title);
-          fd.append("description", this.product.description);
-          fd.append("location", this.product.location);
-          fd.append("phone", this.product.phone);
-          fd.append("userId", this.$store.state.userId);
-          try {
-             axios
-              .post("http://localhost:8080/api/lostfound/post", fd, {
-                headers: {
-                  "content-type": undefined,
-                  Authorization: "Bearer " + this.$store.state.token
-                }
-              })
-              .then(response => {
-                this.lostfound.id = response.data.id;
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          } catch (err) {
-            console.log(err);
-          }
-          this.submitted = true;
-          this.$router.push("/");
-          location.reload();
-    },
-
-    newProduct() {
-      this.submitted = false;
-      this.product = {};
+      const fd = new FormData();
+      // image stuff
+      fd.append("image", this.selectedFile, this.selectedFile.name);
+      // other data
+      fd.append("title", this.product.title);
+      fd.append("description", this.product.description);
+      fd.append("location", this.product.location);
+      fd.append("phone", this.product.phone);
+      fd.append("userId", this.$store.state.userId);
+      try {
+        axios
+          .post("http://localhost:8080/api/lostfound/post", fd, {
+            headers: {
+              "content-type": undefined,
+              Authorization: "Bearer " + this.$store.state.token
+            }
+          })
+          .then(response => {
+            this.lostfound.id = response.data.id;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+      this.submitted = true;
+      this.$router.push("/");
+      location.reload();
     }
   }
 };
