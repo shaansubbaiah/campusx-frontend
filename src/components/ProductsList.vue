@@ -54,9 +54,9 @@
     <!-- 
     Card layout
     -->
-
-    <div id="container">
-      <div v-for="(product,index) in products" :key="index">
+    <md-button v-on:click="redraw">redraw</md-button>
+    <div v-masonry="masonryId" transition-duration="0.3s" item-selector=".item">
+      <div v-masonry-tile="masonryId" class="item" v-for="(product,index) in products" :key="index">
         <!-- 
         Book card layout
         -->
@@ -78,14 +78,14 @@
               </md-card-header>
             </md-ripple>
 
-            <md-card-expand>
+            <md-card-expand v-on:click="redraw">
               <md-card-actions md-alignment="space-between">
                 <div>
                   <md-chip>{{product.sem}}</md-chip>
                   <md-chip>{{product.branch}}</md-chip>
                 </div>
                 <md-card-expand-trigger>
-                  <md-button class="md-icon-button">
+                  <md-button class="md-icon-button" v-on:click="redraw">
                     <md-icon>keyboard_arrow_down</md-icon>
                   </md-button>
                 </md-card-expand-trigger>
@@ -124,7 +124,7 @@
                   <md-chip>{{product.branch}}</md-chip>
                 </div>
                 <md-card-expand-trigger>
-                  <md-button class="md-icon-button">
+                  <md-button class="md-icon-button" v-on:click="redraw">
                     <md-icon>keyboard_arrow_down</md-icon>
                   </md-button>
                 </md-card-expand-trigger>
@@ -175,7 +175,7 @@
                   <md-chip>{{product.branch}}</md-chip>
                 </div>
                 <md-card-expand-trigger>
-                  <md-button class="md-icon-button">
+                  <md-button class="md-icon-button" v-on:click="redraw">
                     <md-icon>keyboard_arrow_down</md-icon>
                   </md-button>
                 </md-card-expand-trigger>
@@ -204,6 +204,7 @@ export default {
   name: "products-list",
   data() {
     return {
+      masonryId: "masonry-grid-1",
       stitle: "",
       ssem: "",
       sbranch: "",
@@ -225,6 +226,10 @@ export default {
   },
   methods: {
     /* eslint-disable no-console */
+    redraw() {
+      console.log("yes");
+      this.$redrawVueMasonry("masonry-grid-1");
+    },
     retrieveProducts() {
       http
         .get(
