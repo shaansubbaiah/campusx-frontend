@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import VeeValidate from 'vee-validate';
+import VueClipboard from 'vue-clipboard2'
 
 require('./assets/stylesheets/style.css')
 
@@ -14,6 +15,7 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
+Vue.use(VueClipboard)
 Vue.use(VueMaterial)
 Vue.use(VeeValidate)
 Vue.use(Vuex)
@@ -39,6 +41,18 @@ const store = new Vuex.Store({
   }
 })
 
+// useful filters
+Vue.filter('capitalize', function (value) {
+  if (!value) return '';
+  value = value.toString();
+  return value.charAt(0).toUpperCase() + value.slice(1);
+})
+
+Vue.filter('datestring', function (value) {
+  if (!value) return '';
+  value = new Date(value);
+  return value.toDateString();
+})
 
 new Vue({
   router,

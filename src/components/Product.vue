@@ -2,13 +2,7 @@
   <div>
     <md-dialog :md-active="true">
       <md-dialog-content class="md-scrollbar">
-        <md-dialog-title>
-          <md-button class="md-icon-button" id="cancel-btn">
-            <router-link to="/">
-              <md-icon>cancel</md-icon>
-            </router-link>
-          </md-button>
-        </md-dialog-title>
+        <md-dialog-title>{{product.title | capitalize}}</md-dialog-title>
 
         <div v-if="product.book">
           <div class="card">
@@ -18,38 +12,40 @@
               </md-card-media>
             </div>
             <div class="info">
-              {{product.title}}
-              <br />
-              {{product.book.author}}
-              <br />
-              {{product.book.publisher}}
-              <br />
-              {{product.sem}}
-              <br />
-              {{product.branch}}
-              <br />
-              {{product.book.phone}}
-              <br />
-              POSTED AT: {{product.createdAt}}
-              <br />
+              <div>
+                <md-chip>{{product.sem}}</md-chip>
+                <md-chip>{{product.branch}}</md-chip>
+                <md-chip class="md-primary" v-if="product.donation">Donation</md-chip>
+              </div>
+              <div>
+                Authored by
+                <strong>{{product.book.author | capitalize}}</strong>
+                <br />Published by
+                <strong>{{product.book.publisher | capitalize}}</strong>
+                <br />Posted at:
+                <strong>{{product.createdAt | datestring}}</strong>
+              </div>
+              <md-button class="md-raised md-primary" v-on:click="toggleContact">{{contactMessage}}</md-button>
             </div>
           </div>
         </div>
 
         <div v-if="product.drive">
           <div class="info">
-            {{product.title}}
-            <br />
-            {{product.drive.description}}
-            <br />
-            <a v-bind:href="product.drive.url">{{product.drive.url}}</a>
-            <br />
-            {{product.sem}}
-            <br />
-            {{product.branch}}
-            <br />
-            POSTED AT: {{product.createdAt}}
-            <br />
+            <div>
+              <md-chip>{{product.sem}}</md-chip>
+              <md-chip>{{product.branch}}</md-chip>
+            </div>
+            <div>
+              Description:
+              <strong>{{product.drive.description | capitalize}}</strong>
+              <br />Links to:
+              <strong>
+                <a>{{product.drive.url}}</a>
+              </strong>
+              <br />Posted at:
+              <strong>{{product.createdAt | datestring}}</strong>
+            </div>
           </div>
         </div>
 
@@ -61,22 +57,26 @@
               </md-card-media>
             </div>
             <div class="info">
-              {{product.title}}
-              <br />
-              {{product.other.description}}
-              <br />
-              {{product.sem}}
-              <br />
-              {{product.branch}}
-              <br />
-              {{product.book.phone}}
-              <br />
-              POSTED AT: {{product.createdAt}}
-              <br />
+              <div>
+                <md-chip>{{product.sem}}</md-chip>
+                <md-chip>{{product.branch}}</md-chip>
+                <md-chip class="md-primary" v-if="product.donation">Donation</md-chip>
+              </div>
+              <div>
+                Description:
+                <strong>{{product.other.description}}</strong>
+                <br />Posted at:
+                <strong>{{product.createdAt | datestring}}</strong>
+              </div>
+              <md-button class="md-raised md-primary" v-on:click="toggleContact">{{contactMessage}}</md-button>
             </div>
           </div>
         </div>
       </md-dialog-content>
+      <md-dialog-actions>
+        <md-button class="md-primary" v-on:click="copyLink">{{shareMessage}}</md-button>
+        <md-button class="md-accent" to="/">Cancel</md-button>
+      </md-dialog-actions>
     </md-dialog>
   </div>
 </template>
@@ -88,6 +88,8 @@ export default {
   name: "product",
   data() {
     return {
+      contactMessage: "Show Contact",
+      shareMessage: "Share",
       product: {
         id: 0,
         title: "",
@@ -113,6 +115,25 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    toggleContact() {
+      if (this.contactMessage == "Show Contact") {
+        if (this.product.book) {
+          this.contactMessage = this.product.book.phone;
+        } else if (this.product.other) {
+          this.contactMessage = this.product.other.phone;
+        }
+      } else {
+        this.contactMessage = "Show Contact";
+      }
+    },
+    copyLink() {
+      this.$copyText(`http://localhost:8081/product/${this.product.id}`).then(
+        e => {
+          this.shareMessage = "Copied!";
+          console.log(e);
+        }
+      );
     }
   },
   mounted() {
@@ -122,12 +143,19 @@ export default {
 </script>
 
 <style scoped>
-#cancel-btn {
-  float: right;
-}
-
 .card {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.info,
+.image {
+  margin: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>
