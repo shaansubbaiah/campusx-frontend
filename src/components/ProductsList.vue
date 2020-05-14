@@ -81,32 +81,32 @@
                   </div>
                   <div class="md-subhead">by {{product.book.author}}</div>
                 </md-card-header>
-
-                <md-card-expand>
-                  <md-card-actions md-alignment="space-between">
-                    <div>
-                      <md-chip>{{product.sem}}</md-chip>
-                      <md-chip>{{product.branch}}</md-chip>
-                    </div>
-                    <md-card-expand-trigger>
-                      <md-button class="md-icon-button">
-                        <md-icon>keyboard_arrow_down</md-icon>
-                      </md-button>
-                    </md-card-expand-trigger>
-                  </md-card-actions>
-
-                  <md-card-expand-content>
-                    <md-card-content>
-                      Published by {{product.book.publisher}}
-                      <br />
-                      Contact: {{product.book.phone}}
-                      <br />
-                      Posted at: {{product.createdAt}}
-                      <br />
-                    </md-card-content>
-                  </md-card-expand-content>
-                </md-card-expand>
               </md-ripple>
+
+              <md-card-expand>
+                <md-card-actions md-alignment="space-between">
+                  <div>
+                    <md-chip>{{product.sem}}</md-chip>
+                    <md-chip>{{product.branch}}</md-chip>
+                  </div>
+                  <md-card-expand-trigger>
+                    <md-button class="md-icon-button">
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-expand-trigger>
+                </md-card-actions>
+
+                <md-card-expand-content>
+                  <md-card-content>
+                    Published by {{product.book.publisher}}
+                    <br />
+                    Contact: {{product.book.phone}}
+                    <br />
+                    Posted at: {{product.createdAt}}
+                    <br />
+                  </md-card-content>
+                </md-card-expand-content>
+              </md-card-expand>
             </md-card>
           </div>
 
@@ -122,30 +122,30 @@
                     <div class="md-subhead">{{product.drive.description}}</div>
                   </a>
                 </md-card-header>
-
-                <md-card-expand>
-                  <md-card-actions md-alignment="space-between">
-                    <div>
-                      <md-chip>{{product.sem}}</md-chip>
-                      <md-chip>{{product.branch}}</md-chip>
-                    </div>
-                    <md-card-expand-trigger>
-                      <md-button class="md-icon-button">
-                        <md-icon>keyboard_arrow_down</md-icon>
-                      </md-button>
-                    </md-card-expand-trigger>
-                  </md-card-actions>
-
-                  <md-card-expand-content>
-                    <md-card-content>
-                      Links to: {{product.drive.url}}
-                      <br />
-                      Posted at: {{product.createdAt}}
-                      <br />
-                    </md-card-content>
-                  </md-card-expand-content>
-                </md-card-expand>
               </md-ripple>
+
+              <md-card-expand>
+                <md-card-actions md-alignment="space-between">
+                  <div>
+                    <md-chip>{{product.sem}}</md-chip>
+                    <md-chip>{{product.branch}}</md-chip>
+                  </div>
+                  <md-card-expand-trigger>
+                    <md-button class="md-icon-button">
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-expand-trigger>
+                </md-card-actions>
+
+                <md-card-expand-content>
+                  <md-card-content>
+                    Links to: {{product.drive.url}}
+                    <br />
+                    Posted at: {{product.createdAt}}
+                    <br />
+                  </md-card-content>
+                </md-card-expand-content>
+              </md-card-expand>
             </md-card>
           </div>
 
@@ -172,30 +172,30 @@
 
                   <div class="md-subhead">{{product.other.description}}</div>
                 </md-card-header>
-
-                <md-card-expand>
-                  <md-card-actions md-alignment="space-between">
-                    <div>
-                      <md-chip>{{product.sem}}</md-chip>
-                      <md-chip>{{product.branch}}</md-chip>
-                    </div>
-                    <md-card-expand-trigger>
-                      <md-button class="md-icon-button">
-                        <md-icon>keyboard_arrow_down</md-icon>
-                      </md-button>
-                    </md-card-expand-trigger>
-                  </md-card-actions>
-
-                  <md-card-expand-content>
-                    <md-card-content>
-                      Contact: {{product.other.phone}}
-                      <br />
-                      Posted at: {{product.createdAt}}
-                      <br />
-                    </md-card-content>
-                  </md-card-expand-content>
-                </md-card-expand>
               </md-ripple>
+
+              <md-card-expand>
+                <md-card-actions md-alignment="space-between">
+                  <div>
+                    <md-chip>{{product.sem}}</md-chip>
+                    <md-chip>{{product.branch}}</md-chip>
+                  </div>
+                  <md-card-expand-trigger>
+                    <md-button class="md-icon-button">
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-expand-trigger>
+                </md-card-actions>
+
+                <md-card-expand-content>
+                  <md-card-content>
+                    Contact: {{product.other.phone}}
+                    <br />
+                    Posted at: {{product.createdAt}}
+                    <br />
+                  </md-card-content>
+                </md-card-expand-content>
+              </md-card-expand>
             </md-card>
           </div>
         </transition>
