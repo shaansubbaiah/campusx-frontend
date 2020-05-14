@@ -55,150 +55,141 @@
     Card layout
     -->
 
-    <!-- <div class="md-layout md-alignment-bottom-center" id="container"> -->
     <div id="container">
       <div v-for="(product,index) in products" :key="index">
         <!-- 
         Book card layout
         -->
-        <transition name="fade">
-          <div v-if="product.book">
-            <md-card class="rounded-card">
-              <md-ripple>
-                <md-card-media>
-                  <a :href="'/product/' + product.id">
-                    <img
-                      v-bind:src="'http://localhost:8080/'+product.book.image"
-                      alt="product.title"
-                    />
-                  </a>
-                </md-card-media>
+        <div v-if="product.book">
+          <md-card class="rounded-card">
+            <md-ripple>
+              <md-card-media>
+                <a :href="'/product/' + product.id">
+                  <img v-bind:src="'http://localhost:8080/'+product.book.image" alt="product.title" />
+                </a>
+              </md-card-media>
 
-                <md-card-header>
-                  <div class="md-title">
-                    {{product.title}}
-                    <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
-                  </div>
-                  <div class="md-subhead">by {{product.book.author}}</div>
-                </md-card-header>
-              </md-ripple>
+              <md-card-header>
+                <div class="md-title">
+                  {{product.title | capitalize}}
+                  <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
+                </div>
+                <div class="md-subhead">by {{product.book.author | capitalize}}</div>
+              </md-card-header>
+            </md-ripple>
 
-              <md-card-expand>
-                <md-card-actions md-alignment="space-between">
-                  <div>
-                    <md-chip>{{product.sem}}</md-chip>
-                    <md-chip>{{product.branch}}</md-chip>
-                  </div>
-                  <md-card-expand-trigger>
-                    <md-button class="md-icon-button">
-                      <md-icon>keyboard_arrow_down</md-icon>
-                    </md-button>
-                  </md-card-expand-trigger>
-                </md-card-actions>
+            <md-card-expand>
+              <md-card-actions md-alignment="space-between">
+                <div>
+                  <md-chip>{{product.sem}}</md-chip>
+                  <md-chip>{{product.branch}}</md-chip>
+                </div>
+                <md-card-expand-trigger>
+                  <md-button class="md-icon-button">
+                    <md-icon>keyboard_arrow_down</md-icon>
+                  </md-button>
+                </md-card-expand-trigger>
+              </md-card-actions>
 
-                <md-card-expand-content>
-                  <md-card-content>
-                    Published by {{product.book.publisher}}
-                    <br />
-                    Contact: {{product.book.phone}}
-                    <br />
-                    Posted at: {{product.createdAt}}
-                    <br />
-                  </md-card-content>
-                </md-card-expand-content>
-              </md-card-expand>
-            </md-card>
-          </div>
+              <md-card-expand-content>
+                <md-card-content>
+                  Published by {{product.book.publisher | capitalize}}
+                  <br />
+                  Posted at: {{product.createdAt | datestring}}
+                  <br />
+                </md-card-content>
+              </md-card-expand-content>
+            </md-card-expand>
+          </md-card>
+        </div>
 
-          <!-- 
+        <!-- 
         Drive card layout
-          -->
-          <div v-if="product.drive">
-            <md-card class="rounded-card">
-              <md-ripple>
-                <md-card-header>
-                  <a :href="'/product/' + product.id">
-                    <div class="md-title">{{product.title}}</div>
-                    <div class="md-subhead">{{product.drive.description}}</div>
-                  </a>
-                </md-card-header>
-              </md-ripple>
+        -->
+        <div v-if="product.drive">
+          <md-card class="rounded-card">
+            <md-ripple>
+              <md-card-header>
+                <a :href="'/product/' + product.id">
+                  <div class="md-title">{{product.title | capitalize}}</div>
+                  <div class="md-subhead">{{product.drive.description | capitalize}}</div>
+                </a>
+              </md-card-header>
+            </md-ripple>
 
-              <md-card-expand>
-                <md-card-actions md-alignment="space-between">
-                  <div>
-                    <md-chip>{{product.sem}}</md-chip>
-                    <md-chip>{{product.branch}}</md-chip>
-                  </div>
-                  <md-card-expand-trigger>
-                    <md-button class="md-icon-button">
-                      <md-icon>keyboard_arrow_down</md-icon>
-                    </md-button>
-                  </md-card-expand-trigger>
-                </md-card-actions>
+            <md-card-expand>
+              <md-card-actions md-alignment="space-between">
+                <div>
+                  <md-chip>{{product.sem}}</md-chip>
+                  <md-chip>{{product.branch}}</md-chip>
+                </div>
+                <md-card-expand-trigger>
+                  <md-button class="md-icon-button">
+                    <md-icon>keyboard_arrow_down</md-icon>
+                  </md-button>
+                </md-card-expand-trigger>
+              </md-card-actions>
 
-                <md-card-expand-content>
-                  <md-card-content>
-                    Links to: {{product.drive.url}}
-                    <br />
-                    Posted at: {{product.createdAt}}
-                    <br />
-                  </md-card-content>
-                </md-card-expand-content>
-              </md-card-expand>
-            </md-card>
-          </div>
+              <md-card-expand-content>
+                <md-card-content>
+                  Links to:
+                  <a>{{product.drive.url}}</a>
+                  <br />
+                  Posted at: {{product.createdAt | datestring}}
+                  <br />
+                </md-card-content>
+              </md-card-expand-content>
+            </md-card-expand>
+          </md-card>
+        </div>
 
-          <!-- 
+        <!-- 
         Other card layout
-          -->
-          <div v-if="product.other">
-            <md-card class="rounded-card">
-              <md-ripple>
-                <md-card-media>
-                  <a :href="'/product/' + product.id">
-                    <img
-                      v-bind:src="'http://localhost:8080/'+product.other.image"
-                      alt="product.title"
-                    />
-                  </a>
-                </md-card-media>
+        -->
+        <div v-if="product.other">
+          <md-card class="rounded-card">
+            <md-ripple>
+              <md-card-media>
+                <a :href="'/product/' + product.id">
+                  <img
+                    v-bind:src="'http://localhost:8080/'+product.other.image"
+                    alt="product.title"
+                  />
+                </a>
+              </md-card-media>
 
-                <md-card-header>
-                  <div class="md-title">
-                    {{product.title}}
-                    <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
-                  </div>
+              <md-card-header>
+                <div class="md-title">
+                  {{product.title | capitalize}}
+                  <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
+                </div>
 
-                  <div class="md-subhead">{{product.other.description}}</div>
-                </md-card-header>
-              </md-ripple>
+                <div class="md-subhead">{{product.other.description | capitalize}}</div>
+              </md-card-header>
+            </md-ripple>
 
-              <md-card-expand>
-                <md-card-actions md-alignment="space-between">
-                  <div>
-                    <md-chip>{{product.sem}}</md-chip>
-                    <md-chip>{{product.branch}}</md-chip>
-                  </div>
-                  <md-card-expand-trigger>
-                    <md-button class="md-icon-button">
-                      <md-icon>keyboard_arrow_down</md-icon>
-                    </md-button>
-                  </md-card-expand-trigger>
-                </md-card-actions>
+            <md-card-expand>
+              <md-card-actions md-alignment="space-between">
+                <div>
+                  <md-chip>{{product.sem}}</md-chip>
+                  <md-chip>{{product.branch}}</md-chip>
+                </div>
+                <md-card-expand-trigger>
+                  <md-button class="md-icon-button">
+                    <md-icon>keyboard_arrow_down</md-icon>
+                  </md-button>
+                </md-card-expand-trigger>
+              </md-card-actions>
 
-                <md-card-expand-content>
-                  <md-card-content>
-                    Contact: {{product.other.phone}}
-                    <br />
-                    Posted at: {{product.createdAt}}
-                    <br />
-                  </md-card-content>
-                </md-card-expand-content>
-              </md-card-expand>
-            </md-card>
-          </div>
-        </transition>
+              <md-card-expand-content>
+                <md-card-content>
+                  Posted at: {{product.createdAt | datestring}}
+                  <br />
+                </md-card-content>
+              </md-card-expand-content>
+            </md-card-expand>
+          </md-card>
+        </div>
       </div>
     </div>
 
@@ -247,8 +238,7 @@ export default {
             this.sdonation
         )
         .then(response => {
-          this.products = response.data; // JSON are parsed automatically.
-          console.log(response.data);
+          this.products = response.data;
         })
         .catch(e => {
           console.log(e);
