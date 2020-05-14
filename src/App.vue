@@ -45,10 +45,9 @@
     <md-button
       v-show="this.$store.state.userId"
       class="md-fab md-fab-bottom-right md-primary md-fixed"
+      to="/add"
     >
-      <router-link to="/add">
-        <md-icon>add</md-icon>
-      </router-link>
+      <md-icon>add</md-icon>
     </md-button>
   </div>
 </template>
