@@ -54,7 +54,6 @@
     <!-- 
     Card layout
     -->
-    <md-button v-on:click="redraw">redraw</md-button>
     <div v-masonry="masonryId" transition-duration="0.3s" item-selector=".item">
       <div v-masonry-tile="masonryId" class="item" v-for="(product,index) in products" :key="index">
         <!-- 
@@ -76,30 +75,21 @@
                 </div>
                 <div class="md-subhead">by {{product.book.author | capitalize}}</div>
               </md-card-header>
-            </md-ripple>
 
-            <md-card-expand v-on:click="redraw">
+              <md-card-content>
+                Published by {{product.book.publisher | capitalize}}
+                <br />
+                Posted at: {{product.createdAt | datestring}}
+                <br />
+              </md-card-content>
+
               <md-card-actions md-alignment="space-between">
                 <div>
                   <md-chip>{{product.sem}}</md-chip>
                   <md-chip>{{product.branch}}</md-chip>
                 </div>
-                <md-card-expand-trigger>
-                  <md-button class="md-icon-button" v-on:click="redraw">
-                    <md-icon>keyboard_arrow_down</md-icon>
-                  </md-button>
-                </md-card-expand-trigger>
               </md-card-actions>
-
-              <md-card-expand-content>
-                <md-card-content>
-                  Published by {{product.book.publisher | capitalize}}
-                  <br />
-                  Posted at: {{product.createdAt | datestring}}
-                  <br />
-                </md-card-content>
-              </md-card-expand-content>
-            </md-card-expand>
+            </md-ripple>
           </md-card>
         </div>
 
@@ -115,31 +105,22 @@
                   <div class="md-subhead">{{product.drive.description | capitalize}}</div>
                 </a>
               </md-card-header>
-            </md-ripple>
 
-            <md-card-expand>
+              <md-card-content>
+                Links to:
+                <a>{{product.drive.url}}</a>
+                <br />
+                Posted at: {{product.createdAt | datestring}}
+                <br />
+              </md-card-content>
+
               <md-card-actions md-alignment="space-between">
                 <div>
                   <md-chip>{{product.sem}}</md-chip>
                   <md-chip>{{product.branch}}</md-chip>
                 </div>
-                <md-card-expand-trigger>
-                  <md-button class="md-icon-button" v-on:click="redraw">
-                    <md-icon>keyboard_arrow_down</md-icon>
-                  </md-button>
-                </md-card-expand-trigger>
               </md-card-actions>
-
-              <md-card-expand-content>
-                <md-card-content>
-                  Links to:
-                  <a>{{product.drive.url}}</a>
-                  <br />
-                  Posted at: {{product.createdAt | datestring}}
-                  <br />
-                </md-card-content>
-              </md-card-expand-content>
-            </md-card-expand>
+            </md-ripple>
           </md-card>
         </div>
 
@@ -166,28 +147,16 @@
 
                 <div class="md-subhead">{{product.other.description | capitalize}}</div>
               </md-card-header>
-            </md-ripple>
 
-            <md-card-expand>
+              <md-card-content>Posted at: {{product.createdAt | datestring}}</md-card-content>
+
               <md-card-actions md-alignment="space-between">
                 <div>
                   <md-chip>{{product.sem}}</md-chip>
                   <md-chip>{{product.branch}}</md-chip>
                 </div>
-                <md-card-expand-trigger>
-                  <md-button class="md-icon-button" v-on:click="redraw">
-                    <md-icon>keyboard_arrow_down</md-icon>
-                  </md-button>
-                </md-card-expand-trigger>
               </md-card-actions>
-
-              <md-card-expand-content>
-                <md-card-content>
-                  Posted at: {{product.createdAt | datestring}}
-                  <br />
-                </md-card-content>
-              </md-card-expand-content>
-            </md-card-expand>
+            </md-ripple>
           </md-card>
         </div>
       </div>
@@ -229,6 +198,10 @@ export default {
     redraw() {
       console.log("yes");
       this.$redrawVueMasonry("masonry-grid-1");
+
+      // setTimeout(function() {
+      //   this.$redrawVueMasonry("masonry-grid-1");
+      // }, 500);
     },
     retrieveProducts() {
       http
@@ -267,11 +240,13 @@ export default {
 </script>
  
 <style scoped>
+/* #container {
+  /* display: flex; */
+/* flex-flow: row wrap; */
+/* justify-content: center !important; */
+/* align-content: stretch; */
 #container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-content: stretch;
+  align-content: center !important;
 }
 
 #search-container {
