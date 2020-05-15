@@ -83,6 +83,7 @@ export default {
     },
     Logout() {
       this.$store.commit("Logout");
+      location.reload();
     }
   }
 };
