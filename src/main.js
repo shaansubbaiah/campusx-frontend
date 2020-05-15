@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from './router';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
-import { VueMasonryPlugin } from 'vue-masonry';
 
 import VeeValidate from 'vee-validate';
 import VueClipboard from 'vue-clipboard2'
@@ -18,7 +17,6 @@ import 'vue-material/dist/theme/default.css'
 
 Vue.use(VueClipboard)
 Vue.use(VueMaterial)
-Vue.use(VueMasonryPlugin)
 Vue.use(VeeValidate)
 Vue.use(Vuex)
 
@@ -27,7 +25,9 @@ const store = new Vuex.Store({
   state: {
     token: "",
     userId: null,
-    username: "Stranger"
+    username: "Stranger",
+    login: false,
+    register: false
   },
   mutations: {
     Login(state, persisted_state) {

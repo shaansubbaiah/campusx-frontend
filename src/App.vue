@@ -4,9 +4,16 @@
       <div id="greeter">
         <p>Hey {{this.$store.state.username}}!</p>
       </div>
+
       <div id="account-buttons">
-        <md-button v-show="!this.$store.state.userId" class="md-primary" to="/login">Login</md-button>
-        <md-button v-show="!this.$store.state.userId" class="md-accent" to="/register">Register</md-button>
+        <md-button v-show="!this.$store.state.userId" class="md-primary" v-on:click="Login">
+          Login
+          <Login />
+        </md-button>
+        <md-button v-show="!this.$store.state.userId" class="md-accent" v-on:click="Register">
+          Register
+          <Register />
+        </md-button>
         <md-button
           v-show="this.$store.state.userId"
           class="md-dense md-accent"
@@ -53,6 +60,9 @@
 </template>
 
 <script>
+import Login from './components/Login'
+import Register from './components/Register'
+
 export default {
   name: "products-list",
   data() {
@@ -60,7 +70,17 @@ export default {
       products: {}
     };
   },
+  components : {
+    Login,
+    Register
+  },
   methods: {
+    Login() {
+      this.$store.state.login = true;
+    },
+    Register() {
+      this.$store.state.register = true;
+    },
     Logout() {
       this.$store.commit("Logout");
     }

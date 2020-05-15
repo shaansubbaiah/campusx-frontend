@@ -1,39 +1,43 @@
 <template>
   <div>
-    <md-dialog :md-active="true">
+    <md-dialog :md-active="this.$store.state.register">
       <md-dialog-content>
         <form>
-          <div v-if="!submitted">
-            <md-field :class="getValidationClass('name')">
-              <label for="name">USERNAME</label>
-              <md-input type="name" name="name" id="name" v-model="user.name"></md-input>
-              <span class="md-error" v-if="!$v.user.name.required">The username is required</span>
-              <span class="md-error" v-else-if="!$v.user.name.minLength">Atleast 3 characters</span>
-            </md-field>
+          <md-field :class="getValidationClass('name')">
+            <label for="name">USERNAME</label>
+            <md-input type="name" name="name" id="name" v-model="user.name"></md-input>
+            <span class="md-error" v-if="!$v.user.name.required">The username is required</span>
+            <span class="md-error" v-else-if="!$v.user.name.minLength">Atleast 3 characters</span>
+          </md-field>
 
-            <md-field :class="getValidationClass('email')">
-              <label for="email">Email</label>
-              <md-input type="email" name="email" id="email" v-model="user.email"></md-input>
-              <span class="md-error" v-if="!$v.user.email.required">The email is required</span>
-              <span class="md-error" v-else-if="!$v.user.email.email">Invalid email</span>
-            </md-field>
+          <md-field :class="getValidationClass('email')">
+            <label for="email">Email</label>
+            <md-input type="email" name="email" id="email" v-model="user.email"></md-input>
+            <span class="md-error" v-if="!$v.user.email.required">The email is required</span>
+            <span class="md-error" v-else-if="!$v.user.email.email">Invalid email</span>
+          </md-field>
 
-            <md-field :class="getValidationClass('password')">
-              <label for="password">PASSWORD</label>
-              <md-input type="password" name="password" id="password" v-model="user.password"></md-input>
-              <span class="md-error" v-if="!$v.user.password.required">The password is required</span>
-              <span class="md-error" v-else-if="!$v.user.password.minLength">Atleast 8 characters</span>
-            </md-field>
-          </div>
+          <md-field :class="getValidationClass('password')">
+            <label for="password">PASSWORD</label>
+            <md-input type="password" name="password" id="password" v-model="user.password"></md-input>
+            <span class="md-error" v-if="!$v.user.password.required">The password is required</span>
+            <span class="md-error" v-else-if="!$v.user.password.minLength">Atleast 8 characters</span>
+          </md-field>
+
+          <md-dialog-actions>
+            <md-button v-on:click="validateRegister" class="md-raised md-primary">Register</md-button>
+            <md-button v-on:click="cancel" class="md-accent">Cancel</md-button>
+          </md-dialog-actions>
         </form>
-
-        <div v-if="message">{{message}}</div>
-        <md-dialog-actions>
-          <md-button v-on:click="validateRegister" class="md-raised md-primary">Register</md-button>
-          <md-button class="md-accent" to="/">Cancel</md-button>
-        </md-dialog-actions>
       </md-dialog-content>
     </md-dialog>
+
+    <md-dialog-alert
+      :md-active.sync="alert"
+      md-confirm-text="Cool!" >
+      <md-dialog-alert-content> {{this.message}}</md-dialog-alert-content>
+    </md-dialog-alert>
+
   </div>
 </template>
 
@@ -48,8 +52,8 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
+      alert: false,
       message: "",
-      submitted: false,
       user: {
         name: "",
         email: "",
@@ -109,7 +113,12 @@ export default {
         .catch(e => {
           console.log(e);
         });
-      this.submitted = true;
+      this.alert = true;
+      this.user = {}
+      this.$store.state.register = false;
+    },
+    cancel() {
+      this.$store.state.register = false;
     }
   }
 };
