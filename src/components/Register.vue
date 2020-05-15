@@ -32,11 +32,9 @@
       </md-dialog-content>
     </md-dialog>
 
-    <md-dialog-alert
-      :md-active.sync="alert"
-      md-confirm-text="Cool!" >
-      <md-dialog-alert-content> {{this.message}}</md-dialog-alert-content>
-    </md-dialog-alert>
+    <div v-if="alert">
+      <Alert />
+    </div>
 
   </div>
 </template>
@@ -44,6 +42,7 @@
 <script>
 import http from "../http-common";
 import { validationMixin } from "vuelidate";
+import Alert from "./Alert";
 
 import { required, email, minLength } from "vuelidate/lib/validators";
 
@@ -60,6 +59,9 @@ export default {
         password: ""
       }
     };
+  },
+  components: {
+    Alert
   },
   validations: {
     user: {
@@ -104,9 +106,10 @@ export default {
         .post("/users/register", data)
         .then(response => {
           if (response.data.message == `Email has already registered.`) {
-            this.message = response.data.message;
+            this.$store.state.message = response.data.message;
           } else {
-            this.message = "Successful..Login to continue";
+            this.$store.state.message = "Successful..Login to continue";
+            this.user = {};
           }
           console.log(response.data);
         })
@@ -114,7 +117,6 @@ export default {
           console.log(e);
         });
       this.alert = true;
-      this.user = {}
       this.$store.state.register = false;
     },
     cancel() {

@@ -26,11 +26,9 @@
       </md-dialog-content>
     </md-dialog>
 
-    <md-dialog-alert
-      :md-active.sync="alert"
-      md-confirm-text="Cool!" >
-      <md-dialog-alert-content> {{this.message}}</md-dialog-alert-content>
-    </md-dialog-alert>
+    <div v-if="alert">
+      <Alert />
+    </div>
 
   </div>
 </template>
@@ -38,6 +36,7 @@
 <script>
 import http from "../http-common";
 import { validationMixin } from "vuelidate";
+import Alert from "./Alert";
 
 import { required, email, minLength } from "vuelidate/lib/validators";
 
@@ -66,6 +65,9 @@ export default {
       }
     }
   },
+  components: {
+    Alert
+  },
   methods: {
     getValidationClass(fieldName) {
       const field = this.$v.user[fieldName];
@@ -90,7 +92,7 @@ export default {
       http
         .post("/users/login", data)
         .then(response => {
-          this.message = response.data.message;
+          this.$store.state.message = response.data.message;
           if (response.status) {
             var persisted_state = {
               name: response.data.name,
@@ -104,7 +106,6 @@ export default {
           console.log(e);
         });
       this.alert = true;
-      this.user = {};
       this.$store.state.login = false;
     },
     cancel() {

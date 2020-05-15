@@ -27,7 +27,8 @@ const store = new Vuex.Store({
     userId: null,
     username: "Stranger",
     login: false,
-    register: false
+    register: false,
+    message: "",
   },
   mutations: {
     Login(state, persisted_state) {
@@ -39,6 +40,7 @@ const store = new Vuex.Store({
       state.username = "Stranger";
       state.userId = null;
       state.token = "";
+      state.message = "";
     }
   }
 })
