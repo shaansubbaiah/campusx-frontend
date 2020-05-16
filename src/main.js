@@ -28,7 +28,9 @@ const store = new Vuex.Store({
     username: "Stranger",
     login: false,
     register: false,
+    addproduct: false,
     message: "",
+    alert: false
   },
   mutations: {
     Login(state, persisted_state) {

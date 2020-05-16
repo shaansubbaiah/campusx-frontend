@@ -17,6 +17,8 @@
     }),
     methods: {
       onConfirm () {
+        this.$store.state.alert = false;
+        this.$store.state.message = "";
         this.$router.push("/");
         location.reload();
       }

@@ -52,9 +52,11 @@
     <md-button
       v-show="this.$store.state.userId"
       class="md-fab md-fab-bottom-right md-primary md-fixed"
-      to="/add"
+      v-on:click="AddProduct"
     >
-      <md-icon>add</md-icon>
+      <md-icon>add
+        <AddProduct />
+      </md-icon>
     </md-button>
   </div>
 </template>
@@ -62,6 +64,7 @@
 <script>
 import Login from './components/Login'
 import Register from './components/Register'
+import AddProduct from './components/AddProduct'
 
 export default {
   name: "products-list",
@@ -72,7 +75,8 @@ export default {
   },
   components : {
     Login,
-    Register
+    Register,
+    AddProduct
   },
   methods: {
     Login() {
@@ -80,6 +84,9 @@ export default {
     },
     Register() {
       this.$store.state.register = true;
+    },
+    AddProduct() {
+      this.$store.state.addproduct = true;
     },
     Logout() {
       this.$store.commit("Logout");

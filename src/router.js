@@ -3,7 +3,6 @@ import Router from "vue-router";
 
 import ProductsList from "./components/ProductsList.vue";
 import UserProducts from "./components/UserProducts.vue";
-import AddProduct from "./components/AddProduct.vue";
 import Product from "./components/Product.vue";
 import UpdateThing from "./components/UpdateThing.vue";
 import LostFound from "./components/LostFound.vue";
@@ -22,11 +21,6 @@ export default new Router({
       path: "/userproducts",
       name: "userproducts",
       component: UserProducts
-    },
-    {
-      path: "/add",
-      name: "add",
-      component: AddProduct
     },
     {
       path: "/product/:id",
