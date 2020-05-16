@@ -107,11 +107,10 @@ export default {
         .then(response => {
           if (response.data.message == `Email has already registered.`) {
             this.$store.state.message = response.data.message;
-          } else {
+          } 
+          else {
             this.$store.state.message = "Successful..Login to continue";
-            this.user = {};
           }
-          console.log(response.data);
         })
         .catch(e => {
           console.log(e);

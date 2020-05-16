@@ -1,26 +1,25 @@
 <template>
   <div>
-    <md-dialog-alert
-      :md-active.sync="show"
+    <md-dialog-confirm
+      :md-active.sync="active"
       :md-content="this.$store.state.message"
-      md-cancel-text="Cool!"
-      @close="confirm" > 
-    </md-dialog-alert>
+      md-confirm-text="Cool!"
+      md-cancel-text=""
+      @md-confirm="onConfirm" />
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return{
-      show: true
-    }
-  },
-  methods: {
-    confirm() {
-      this.$store.state.message = "";
-      location.reload();
+  export default {
+    name: 'DialogConfirm',
+    data: () => ({
+      active: true,
+    }),
+    methods: {
+      onConfirm () {
+        this.$router.push("/");
+        location.reload();
+      }
     }
   }
-}
 </script>
