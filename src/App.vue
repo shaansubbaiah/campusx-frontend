@@ -1,76 +1,86 @@
 <template>
   <div id="app" class="container-fluid">
-    <div id="header">
-      <div id="greeter">
-        <p>
-          Hey
-          <br />
-          <strong>{{this.$store.state.username}}!</strong>
-        </p>
+    <slide-y-down-transition appear :duration="1000" :delay="250">
+      <div id="header">
+        <div id="greeter">
+          <p>
+            Hey
+            <br />
+            <strong>{{this.$store.state.username}}!</strong>
+          </p>
+        </div>
+
+        <div id="account-buttons">
+          <md-button
+            v-show="!this.$store.state.userId"
+            class="md-primary md-dense"
+            v-on:click="Login"
+          >
+            Login
+            <Login />
+          </md-button>
+          <md-button
+            v-show="!this.$store.state.userId"
+            class="md-accent md-dense"
+            v-on:click="Register"
+          >
+            Register
+            <Register />
+          </md-button>
+          <md-button
+            v-show="this.$store.state.userId"
+            class="md-dense md-accent"
+            v-on:click="Logout"
+          >Logout</md-button>
+        </div>
       </div>
+    </slide-y-down-transition>
 
-      <div id="account-buttons">
-        <md-button
-          v-show="!this.$store.state.userId"
-          class="md-primary md-dense"
-          v-on:click="Login"
-        >
-          Login
-          <Login />
-        </md-button>
-        <md-button
-          v-show="!this.$store.state.userId"
-          class="md-accent md-dense"
-          v-on:click="Register"
-        >
-          Register
-          <Register />
-        </md-button>
-        <md-button
-          v-show="this.$store.state.userId"
-          class="md-dense md-accent"
-          v-on:click="Logout"
-        >Logout</md-button>
+    <slide-y-down-transition appear :duration="1000" :delay="500">
+      <div id="logo">
+        <h3 id="logo">books kodi</h3>
       </div>
-    </div>
+    </slide-y-down-transition>
 
-    <div id="logo">
-      <h3 id="logo">books kodi</h3>
-    </div>
-
-    <div id="content">
-      <md-tabs class="md-transparent" md-alignment="fixed" md-sync-route>
-        <md-tab id="tab-products" md-label="All Items" md-icon="group" to="/" exact></md-tab>
-        <md-tab
-          v-if="this.$store.state.userId"
-          id="tab-user"
-          md-label="Your Items"
-          md-icon="person"
-          to="/userproducts"
-        ></md-tab>
-        <md-tab id="lost-found" md-label="Lost N Found" md-icon="live_help" to="/lostfound"></md-tab>
-      </md-tabs>
-      <!-- 
+    <slide-y-down-transition appear :duration="1000" :delay="750">
+      <div id="content">
+        <md-tabs class="md-transparent" md-alignment="fixed" md-sync-route>
+          <md-tab id="tab-products" md-label="All Items" md-icon="group" to="/" exact></md-tab>
+          <md-tab
+            v-if="this.$store.state.userId"
+            id="tab-user"
+            md-label="Your Items"
+            md-icon="person"
+            to="/userproducts"
+          ></md-tab>
+          <md-tab id="lost-found" md-label="Lost N Found" md-icon="live_help" to="/lostfound"></md-tab>
+        </md-tabs>
+        <!-- 
       Content render here
-      -->
-      <router-view />
-    </div>
+        -->
+        <router-view />
+      </div>
+    </slide-y-down-transition>
 
-    <div id="footer">You have reached the bottom!</div>
+    <slide-y-down-transition appear :duration="1000" :delay="1000">
+      <div id="footer">You have reached the bottom!</div>
+    </slide-y-down-transition>
 
     <!-- 
     FAB
     -->
-    <md-button
-      v-show="this.$store.state.userId"
-      class="md-fab md-fab-bottom-right md-primary md-fixed"
-      v-on:click="AddProduct"
-    >
-      <md-icon>
-        add
-        <AddProduct />
-      </md-icon>
-    </md-button>
+    <slide-y-down-transition appear :duration="1000" :delay="1500">
+      <md-button
+        v-show="this.$store.state.userId"
+        class="md-fab md-fab-bottom-right md-primary md-fixed"
+        v-on:click="AddProduct"
+      >
+        <md-icon>
+          add
+          <AddProduct />
+        </md-icon>
+      </md-button>
+    </slide-y-down-transition>
   </div>
 </template>
 
@@ -110,6 +120,15 @@ export default {
 </script> 
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 #app {
   margin: 0 auto;
   display: grid;

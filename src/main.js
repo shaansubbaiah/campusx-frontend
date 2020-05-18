@@ -16,6 +16,9 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
+import Transitions from 'vue2-transitions'
+Vue.use(Transitions)
+
 Vue.use(VueClipboard)
 Vue.use(VueMaterial)
 Vue.use(VueMasonryPlugin)
