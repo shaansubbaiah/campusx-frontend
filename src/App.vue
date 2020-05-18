@@ -2,15 +2,27 @@
   <div id="app" class="container-fluid">
     <div id="header">
       <div id="greeter">
-        <p>Hey {{this.$store.state.username}}!</p>
+        <p>
+          Hey
+          <br />
+          <strong>{{this.$store.state.username}}!</strong>
+        </p>
       </div>
 
       <div id="account-buttons">
-        <md-button v-show="!this.$store.state.userId" class="md-primary" v-on:click="Login">
+        <md-button
+          v-show="!this.$store.state.userId"
+          class="md-primary md-dense"
+          v-on:click="Login"
+        >
           Login
           <Login />
         </md-button>
-        <md-button v-show="!this.$store.state.userId" class="md-accent" v-on:click="Register">
+        <md-button
+          v-show="!this.$store.state.userId"
+          class="md-accent md-dense"
+          v-on:click="Register"
+        >
           Register
           <Register />
         </md-button>
@@ -54,7 +66,8 @@
       class="md-fab md-fab-bottom-right md-primary md-fixed"
       v-on:click="AddProduct"
     >
-      <md-icon>add
+      <md-icon>
+        add
         <AddProduct />
       </md-icon>
     </md-button>
@@ -62,9 +75,9 @@
 </template>
 
 <script>
-import Login from './components/Login'
-import Register from './components/Register'
-import AddProduct from './components/AddProduct'
+import Login from "./components/Login";
+import Register from "./components/Register";
+import AddProduct from "./components/AddProduct";
 
 export default {
   name: "products-list",
@@ -73,7 +86,7 @@ export default {
       products: {}
     };
   },
-  components : {
+  components: {
     Login,
     Register,
     AddProduct
@@ -121,6 +134,8 @@ export default {
 
 #account-buttons {
   justify-self: end;
+  display: flex;
+  flex-direction: row;
 }
 
 #content {
@@ -129,6 +144,7 @@ export default {
 }
 
 #greeter p {
+  margin-top: 10px;
   font-size: 18px;
 }
 
