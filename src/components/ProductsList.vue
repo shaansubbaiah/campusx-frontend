@@ -3,53 +3,62 @@
     <!-- 
     Filters, search bar
     -->
-    <div id="search-container">
-      <div id="search-box">
-        <input id="search-input" placeholder="Search..." name="title" v-model="stitle" />
-        <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
-          <md-icon>search</md-icon>
-        </md-button>
-      </div>
-    </div>
-    <!-- 
+    <slide-y-down-transition appear :duration="500" :delay="100">
+      <div>
+        <div id="search-container">
+          <div id="search-box">
+            <input id="search-input" placeholder="Search..." name="title" v-model="stitle" />
+            <md-button v-on:click="retrieveProducts" class="md-icon-button" id="search-icon">
+              <md-icon>search</md-icon>
+            </md-button>
+          </div>
+        </div>
+
+        <!-- 
         Filters
-    -->
-    <div class="md-layout md-gutter" id="filters">
-      <div class="md-layout-item">
-        <md-field id="sem-filter">
-          <label for="sem">Semester</label>
-          <md-select v-model="ssem" name="sem" id="sem">
-            <md-option v-for="semester in semesters" :value="semester" :key="semester">{{semester}}</md-option>
-          </md-select>
-        </md-field>
-      </div>
+        -->
+        <div class="md-layout md-gutter" id="filters">
+          <div class="md-layout-item">
+            <md-field id="sem-filter">
+              <label for="sem">Semester</label>
+              <md-select v-model="ssem" name="sem" id="sem">
+                <md-option
+                  v-for="semester in semesters"
+                  :value="semester"
+                  :key="semester"
+                >{{semester}}</md-option>
+              </md-select>
+            </md-field>
+          </div>
 
-      <div class="md-layout-item">
-        <md-field id="branch-filter">
-          <label for="branch">Branch</label>
-          <md-select v-model="sbranch" name="branch" id="branch">
-            <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
-          </md-select>
-        </md-field>
-      </div>
+          <div class="md-layout-item">
+            <md-field id="branch-filter">
+              <label for="branch">Branch</label>
+              <md-select v-model="sbranch" name="branch" id="branch">
+                <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+              </md-select>
+            </md-field>
+          </div>
 
-      <div class="md-layout-item">
-        <md-field id="donation-filter">
-          <label for="donation">Type</label>
-          <md-select v-model="sdonation" name="donation" id="donation">
-            <md-option value="1">Donation</md-option>
-            <md-option value="0">Trade</md-option>
-          </md-select>
-        </md-field>
-      </div>
-      <!-- 
+          <div class="md-layout-item">
+            <md-field id="donation-filter">
+              <label for="donation">Type</label>
+              <md-select v-model="sdonation" name="donation" id="donation">
+                <md-option value="1">Donation</md-option>
+                <md-option value="0">Trade</md-option>
+              </md-select>
+            </md-field>
+          </div>
+          <!-- 
           Filter Buttons 
-      -->
-      <div class="md-layout-item" id="filter-buttons">
-        <md-button v-on:click="retrieveProducts" class="md-primary">FILTER</md-button>
-        <md-button v-on:click="clearSearch" class="md-accent">CLEAR</md-button>
+          -->
+          <div class="md-layout-item" id="filter-buttons">
+            <md-button v-on:click="retrieveProducts" class="md-primary">FILTER</md-button>
+            <md-button v-on:click="clearSearch" class="md-accent">CLEAR</md-button>
+          </div>
+        </div>
       </div>
-    </div>
+    </slide-y-down-transition>
 
     <!-- 
     Card layout

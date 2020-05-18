@@ -1,7 +1,7 @@
 <template>
   <div class="card-expansion">
-    <div class="container">
-      <div v-for="(product,index) in products" :key="index">
+    <div class="container" v-masonry="masonryId" transition-duration="0.3s" item-selector=".item">
+      <div v-masonry-tile="masonryId" class="item" v-for="(product,index) in products" :key="index">
         <div class="card-button-container">
           <div class="button-box">
             <md-button class="md-accent" v-on:click="deleteProduct(product.id)">Delete</md-button>
