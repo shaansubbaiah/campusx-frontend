@@ -39,12 +39,9 @@
   box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.6) !important;
 }
 
-
 .rounded-card.md-card:hover {
-  transform: scale(1.02) !important;
-  transition-duration: 1s !important;
-  box-shadow: 0 7px 45px -10px rgba(150, 170, 180, 0.7) !important;
-}
+  box-shadow: 0 7px 45px -10px rgba(150, 170, 180, 0.75) !important;
+} 
 
 img,
 .rounded-card,

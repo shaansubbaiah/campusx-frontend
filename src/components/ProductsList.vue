@@ -182,7 +182,6 @@ export default {
   name: "products-list",
   data() {
     return {
-      masonryId: "masonry-grid-1",
       stitle: "",
       ssem: "",
       sbranch: "",
@@ -204,14 +203,6 @@ export default {
   },
   methods: {
     /* eslint-disable no-console */
-    redraw() {
-      console.log("yes");
-      this.$redrawVueMasonry("masonry-grid-1");
-
-      // setTimeout(function() {
-      //   this.$redrawVueMasonry("masonry-grid-1");
-      // }, 500);
-    },
     retrieveProducts() {
       http
         .get(
