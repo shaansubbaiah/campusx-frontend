@@ -4,7 +4,7 @@
       <md-dialog-content>
         <form>
           <md-field :class="getValidationClass('email')">
-            <label for="email">Email</label>
+            <label for="email">EMAIL</label>
             <md-input type="email" name="email" id="email" v-model="user.email"></md-input>
             <span class="md-error" v-if="!$v.user.email.required">The email is required</span>
             <span class="md-error" v-else-if="!$v.user.email.email">Invalid email</span>

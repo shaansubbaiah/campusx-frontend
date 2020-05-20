@@ -33,6 +33,7 @@ const store = new Vuex.Store({
     username: "Stranger",
     login: false,
     register: false,
+    updateuser: false,
     addproduct: false,
     message: "",
     alert: false

@@ -11,6 +11,7 @@
         </div>
 
         <div id="account-buttons">
+
           <md-button
             v-show="!this.$store.state.userId"
             class="md-primary md-dense"
@@ -19,6 +20,7 @@
             Login
             <Login />
           </md-button>
+
           <md-button
             v-show="!this.$store.state.userId"
             class="md-accent md-dense"
@@ -27,11 +29,23 @@
             Register
             <Register />
           </md-button>
+
+          <md-button v-show="this.$store.state.userId"
+            class="md-primary"
+              v-on:click="Edit"
+          >
+            Update User
+            <UpdateUser />
+          </md-button>
+
           <md-button
             v-show="this.$store.state.userId"
             class="md-dense md-accent"
             v-on:click="Logout"
-          >Logout</md-button>
+          >
+            Logout
+          </md-button>
+
         </div>
       </div>
     </slide-y-down-transition>
@@ -80,6 +94,7 @@
           <AddProduct />
         </md-icon>
       </md-button>
+
     </slide-y-down-transition>
   </div>
 </template>
@@ -87,6 +102,7 @@
 <script>
 import Login from "./components/Login";
 import Register from "./components/Register";
+import UpdateUser from './components/UpdateUser';
 import AddProduct from "./components/AddProduct";
 
 export default {
@@ -99,6 +115,7 @@ export default {
   components: {
     Login,
     Register,
+    UpdateUser,
     AddProduct
   },
   methods: {
@@ -107,6 +124,9 @@ export default {
     },
     Register() {
       this.$store.state.register = true;
+    },
+    Edit() {
+      this.$store.state.updateuser = true;
     },
     AddProduct() {
       this.$store.state.addproduct = true;
