@@ -5,21 +5,21 @@
         <form>
           <md-field :class="getValidationClass('name')">
             <label for="name">USERNAME</label>
-            <md-input type="name" name="name" id="name" v-model="user.name"></md-input>
+            <md-input type="name" v-model="user.name"></md-input>
             <span class="md-error" v-if="!$v.user.name.required">The username is required</span>
             <span class="md-error" v-else-if="!$v.user.name.minLength">Atleast 3 characters</span>
           </md-field>
 
           <md-field :class="getValidationClass('email')">
             <label for="email">EMAIL</label>
-            <md-input type="email" name="email" id="email" v-model="user.email"></md-input>
+            <md-input type="email" v-model="user.email"></md-input>
             <span class="md-error" v-if="!$v.user.email.required">The email is required</span>
             <span class="md-error" v-else-if="!$v.user.email.email">Invalid email</span>
           </md-field>
 
           <md-field :class="getValidationClass('password')">
             <label for="password">PASSWORD</label>
-            <md-input type="password" name="password" id="password" v-model="user.password"></md-input>
+            <md-input type="password" v-model="user.password"></md-input>
             <span class="md-error" v-if="!$v.user.password.required">The password is required</span>
             <span class="md-error" v-else-if="!$v.user.password.minLength">Atleast 8 characters</span>
           </md-field>

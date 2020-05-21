@@ -5,26 +5,26 @@
         <form>
           <md-field :class="getValidationClass('name')">
             <label for="name">NEW USERNAME</label>
-            <md-input type="name" name="name" id="name" v-model="user.name"></md-input>
+            <md-input type="name" v-model="user.name"></md-input>
             <span class="md-error" v-if="!$v.user.name.minLength">Atleast 3 characters</span>
           </md-field>
 
           <md-field :class="getValidationClass('email')">
             <label for="email">NEW EMAIL</label>
-            <md-input type="email" name="email" id="email" v-model="user.email"></md-input>
+            <md-input type="email" v-model="user.email"></md-input>
             <span class="md-error" v-if="!$v.user.email.email">Invalid email</span>
           </md-field>
 
           <md-field :class="getValidationClass('oldpassword')">
             <label for="oldpassword">OLD PASSWORD</label>
-            <md-input type="password" name="oldpassword" id="oldpassword" v-model="user.oldpassword"></md-input>
+            <md-input type="password" v-model="user.oldpassword"></md-input>
             <span class="md-error" v-if="!$v.user.oldpassword.required">Old password required</span>
             <span class="md-error" v-if="!$v.user.oldpassword.minLength">Atleast 8 characters</span>
           </md-field>
 
           <md-field :class="getValidationClass('newpassword')">
             <label for="newpassword">NEW PASSWORD</label>
-            <md-input type="password" name="newpassword" id="newpassword" v-model="user.newpassword"></md-input>
+            <md-input type="password" v-model="user.newpassword"></md-input>
             <span class="md-error" v-if="!$v.user.newpassword.minLength">Atleast 8 characters</span>
           </md-field>
 

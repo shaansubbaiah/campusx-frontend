@@ -8,26 +8,26 @@
             <form @submit.prevent="validateBook">
               <md-field :class="getValidationClass('title')">
                 <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <md-input v-model="product.title"></md-input>
                 <span class="md-error" v-if="!$v.product.title.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('author')">
                 <label for="author">AUTHOR</label>
-                <md-input name="author" id="author" v-model="product.author"></md-input>
+                <md-input v-model="product.author"></md-input>
                 <span class="md-error" v-if="!$v.product.author.required">Required field</span>
                 <span class="md-error" v-else-if="!$v.product.author.alphabet">Invalid characters</span>
               </md-field>
 
               <md-field :class="getValidationClass('publisher')">
                 <label for="publisher">PUBLISHER</label>
-                <md-input name="publisher" id="publisher" v-model="product.publisher"></md-input>
+                <md-input v-model="product.publisher"></md-input>
                 <span class="md-error" v-if="!$v.product.publisher.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('sem')">
                 <label for="sem">SEM</label>
-                <md-select v-model="product.sem" name="sem" id="sem">
+                <md-select v-model="product.sem">
                   <md-option
                     v-for="semester in semesters"
                     :value="semester"
@@ -39,7 +39,7 @@
 
               <md-field :class="getValidationClass('branch')">
                 <label for="branch">BRANCH</label>
-                <md-select v-model="product.branch" name="branch" id="branch">
+                <md-select v-model="product.branch">
                   <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                 </md-select>
                 <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
@@ -47,7 +47,7 @@
 
               <md-field :class="getValidationClass('donation')">
                 <label for="donation">TYPE</label>
-                <md-select v-model="product.donation" name="donation" id="donation">
+                <md-select v-model="product.donation">
                   <md-option value="1">Donation</md-option>
                   <md-option value="0">Trade</md-option>
                 </md-select>
@@ -56,7 +56,7 @@
 
               <md-field :class="getValidationClass('phone')">
                 <label for="phone">CONTACT</label>
-                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                <md-input v-model="product.phone"></md-input>
                 <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
                 <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
               </md-field>
@@ -78,20 +78,20 @@
             <form @submit.prevent="validateLink">
               <md-field :class="getValidationClass('title')">
                 <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <md-input v-model="product.title"></md-input>
                 <span class="md-error" v-if="!$v.product.title.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('link')">
                 <label for="link">LINK</label>
-                <md-input name="link" id="link" v-model="product.link"></md-input>
+                <md-input v-model="product.link"></md-input>
                 <span class="md-error" v-if="!$v.product.link.required">Required field</span>
                 <span class="md-error" v-if="!$v.product.link.url">Invalid URL</span>
               </md-field>
 
               <md-field :class="getValidationClass('description')">
                 <label for="description">DESCRIPTION</label>
-                <md-input name="description" id="description" v-model="product.description"></md-input>
+                <md-input v-model="product.description"></md-input>
                 <span
                   class="md-error"
                   v-if="!$v.product.description.required"
@@ -100,7 +100,7 @@
 
               <md-field :class="getValidationClass('sem')">
                 <label for="sem">SEM</label>
-                <md-select v-model="product.sem" name="sem" id="sem">
+                <md-select v-model="product.sem">
                   <md-option
                     v-for="semester in semesters"
                     :value="semester"
@@ -112,7 +112,7 @@
 
               <md-field :class="getValidationClass('branch')">
                 <label for="branch">BRANCH</label>
-                <md-select v-model="product.branch" name="branch" id="branch">
+                <md-select v-model="product.branch">
                   <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                 </md-select>
                 <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
@@ -129,19 +129,19 @@
             <form @submit.prevent="validateOther">
               <md-field :class="getValidationClass('title')">
                 <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <md-input v-model="product.title"></md-input>
                 <span class="md-error" v-if="!$v.product.title.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('description')">
                 <label for="description">DESCRIPTION</label>
-                <md-input name="description" id="description" v-model="product.description"></md-input>
+                <md-input v-model="product.description"></md-input>
                 <span class="md-error" v-if="!$v.product.description.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('sem')">
                 <label for="sem">SEM</label>
-                <md-select v-model="product.sem" name="sem" id="sem">
+                <md-select v-model="product.sem">
                   <md-option
                     v-for="semester in semesters"
                     :value="semester"
@@ -153,7 +153,7 @@
 
               <md-field :class="getValidationClass('branch')">
                 <label for="branch">BRANCH</label>
-                <md-select v-model="product.branch" name="branch" id="branch">
+                <md-select v-model="product.branch">
                   <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
                 </md-select>
                 <span class="md-error" v-if="!$v.product.branch.required">Required field</span>
@@ -161,7 +161,7 @@
 
               <md-field :class="getValidationClass('donation')">
                 <label for="donation">TYPE</label>
-                <md-select v-model="product.donation" name="donation" id="donation">
+                <md-select v-model="product.donation">
                   <md-option value="1">Donation</md-option>
                   <md-option value="0">Trade</md-option>
                 </md-select>
@@ -170,7 +170,7 @@
 
               <md-field :class="getValidationClass('phone')">
                 <label for="phone">CONTACT</label>
-                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                <md-input v-model="product.phone"></md-input>
                 <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
                 <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
               </md-field>
@@ -192,25 +192,25 @@
             <form @submit.prevent="validateLost">
               <md-field :class="getValidationClass('title')">
                 <label for="title">TITLE</label>
-                <md-input name="title" id="title" v-model="product.title"></md-input>
+                <md-input v-model="product.title"></md-input>
                 <span class="md-error" v-if="!$v.product.title.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('description')">
                 <label for="description">DESCRIPTION</label>
-                <md-input name="description" id="description" v-model="product.description"></md-input>
+                <md-input v-model="product.description"></md-input>
                 <span class="md-error" v-if="!$v.product.description.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('location')">
                 <label for="location">LOCATION</label>
-                <md-input name="location" id="location" v-model="product.location"></md-input>
+                <md-input v-model="product.location"></md-input>
                 <span class="md-error" v-if="!$v.product.location.required">Required field</span>
               </md-field>
 
               <md-field :class="getValidationClass('phone')">
                 <label for="phone">CONTACT</label>
-                <md-input name="phone" id="phone" v-model="product.phone"></md-input>
+                <md-input v-model="product.phone"></md-input>
                 <span class="md-error" v-if="!$v.product.phone.required">Required field</span>
                 <span class="md-error" v-else-if="!$v.product.phone.number">Invalid contact</span>
               </md-field>
@@ -434,23 +434,19 @@ export default {
       fd.append("phone", this.product.phone);
       fd.append("userId", this.$store.state.userId);
 
-      try {
-        axios
-          .post("http://localhost:8080/api/things/upload-book", fd, {
-            headers: {
-              "content-type": undefined,
-              Authorization: "Bearer " + this.$store.state.token
-            }
-          })
-          .then(response => {
-            this.book.id = response.data.id;
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+      axios
+        .post("http://localhost:8080/api/things/upload-book", fd, {
+          headers: {
+            "content-type": undefined,
+            Authorization: "Bearer " + this.$store.state.token
+          }
+        })
+        .then(response => {
+          this.book.id = response.data.id;
+        })
+        .catch(e => {
+          console.log(e);
+        });
       this.$store.state.addproduct = false;
       this.$store.state.message = "Product added successfully!";
       this.alert = true;
@@ -465,23 +461,21 @@ export default {
       fd.append("url", this.product.link);
       fd.append("description", this.product.description);
       fd.append("userId", this.$store.state.userId);
-      try {
-        axios
-          .post("http://localhost:8080/api/things/upload-drive", fd, {
-            headers: {
-              "content-type": undefined,
-              Authorization: "Bearer " + this.$store.state.token
-            }
-          })
-          .then(response => {
-            this.book.id = response.data.id;
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+      
+      axios
+        .post("http://localhost:8080/api/things/upload-drive", fd, {
+          headers: {
+            "content-type": undefined,
+            Authorization: "Bearer " + this.$store.state.token
+          }
+        })
+        .then(response => {
+          this.book.id = response.data.id;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      
       this.$store.state.addproduct = false;
       this.$store.state.message = "Product added successfully!";
       this.alert = true;
@@ -499,23 +493,21 @@ export default {
       fd.append("donation", this.product.donation);
       fd.append("phone", this.product.phone);
       fd.append("userId", this.$store.state.userId);
-      try {
-        axios
-          .post("http://localhost:8080/api/things/upload-other", fd, {
-            headers: {
-              "content-type": undefined,
-              Authorization: "Bearer " + this.$store.state.token
-            }
-          })
-          .then(response => {
-            this.book.id = response.data.id;
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+    
+      axios
+        .post("http://localhost:8080/api/things/upload-other", fd, {
+          headers: {
+            "content-type": undefined,
+            Authorization: "Bearer " + this.$store.state.token
+          }
+        })
+        .then(response => {
+          this.book.id = response.data.id;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
       this.$store.state.addproduct = false;
       this.$store.state.message = "Product added successfully!";
       this.alert = true;
@@ -531,23 +523,21 @@ export default {
       fd.append("location", this.product.location);
       fd.append("phone", this.product.phone);
       fd.append("userId", this.$store.state.userId);
-      try {
-        axios
-          .post("http://localhost:8080/api/lostfound/post", fd, {
-            headers: {
-              "content-type": undefined,
-              Authorization: "Bearer " + this.$store.state.token
-            }
-          })
-          .then(response => {
-            this.lostfound.id = response.data.id;
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+      
+      axios
+        .post("http://localhost:8080/api/lostfound/post", fd, {
+          headers: {
+            "content-type": undefined,
+            Authorization: "Bearer " + this.$store.state.token
+          }
+        })
+        .then(response => {
+          this.lostfound.id = response.data.id;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
       this.$store.state.addproduct = false;
       this.$store.state.message = "Product added successfully!";
       this.alert = true;
@@ -558,9 +548,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#cancel-btn {
-  float: right;
-}
-</style>
