@@ -257,9 +257,4 @@ export default {
   );
   margin: 10px 5px 10px 5px;
 }
-/* .card-button-container:hover {
-  transform: scale(0.99);
-  transition-duration: 0.2s !important;
-  box-shadow: 0 7px 45px -10px rgba(150, 170, 180, 0.7) !important;
-} */
 </style>

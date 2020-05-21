@@ -44,9 +44,9 @@
       :md-active.sync="successalert"
       :md-content="this.$store.state.message"
       md-confirm-text="Logout"
-      md-cancel-text=""
-      @md-confirm="Logout" />
-
+      md-cancel-text
+      @md-confirm="Logout"
+    />
   </div>
 </template>
 
@@ -55,7 +55,7 @@ import http from "../http-common";
 import { validationMixin } from "vuelidate";
 import Alert from "./Alert";
 
-import { required,email, minLength } from "vuelidate/lib/validators";
+import { required, email, minLength } from "vuelidate/lib/validators";
 
 export default {
   name: "Register",
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       alert: false,
-      successalert :false,
+      successalert: false,
       message: "",
       user: {
         oldpassword: "",
@@ -101,7 +101,7 @@ export default {
         };
       }
     },
-    
+
     validateUpdate() {
       this.$v.$touch();
 
@@ -118,18 +118,17 @@ export default {
         newpass: this.user.newpassword
       };
       http
-        .put("/users/"+this.$store.state.userId, data , {
-            headers: {
-              "content-type": undefined,
-              Authorization: "Bearer " + this.$store.state.token
-            }
-          })
+        .put("/users/" + this.$store.state.userId, data, {
+          headers: {
+            "content-type": undefined,
+            Authorization: "Bearer " + this.$store.state.token
+          }
+        })
         .then(response => {
-          if(response.data.message == `User updated successfully`){
+          if (response.data.message == `User updated successfully`) {
             this.$store.state.message = response.data.message;
             this.successalert = true;
-          }
-          else{
+          } else {
             this.$store.state.message = response.data.message;
             this.alert = true;
           }
@@ -145,7 +144,7 @@ export default {
       this.$store.commit("Logout");
       location.reload();
     },
-    
+
     cancel() {
       this.$store.state.updateuser = false;
     }

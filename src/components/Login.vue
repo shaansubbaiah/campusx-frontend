@@ -17,19 +17,17 @@
             <span class="md-error" v-else-if="!$v.user.password.minLength">Atleast 8 characters</span>
           </md-field>
 
-            <md-dialog-actions>
+          <md-dialog-actions>
             <md-button v-on:click="validateLogin" class="md-raised md-primary">Login</md-button>
             <md-button v-on:click="cancel" class="md-accent">Cancel</md-button>
           </md-dialog-actions>
         </form>
-       
       </md-dialog-content>
     </md-dialog>
 
     <div v-if="alert">
       <Alert />
     </div>
-
   </div>
 </template>
 
@@ -45,7 +43,7 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
-      alert :false,
+      alert: false,
       message: "",
       user: {
         email: "",

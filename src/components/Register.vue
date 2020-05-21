@@ -35,7 +35,6 @@
     <div v-if="alert">
       <Alert />
     </div>
-
   </div>
 </template>
 
@@ -107,8 +106,7 @@ export default {
         .then(response => {
           if (response.data.message == `Email has already registered.`) {
             this.$store.state.message = response.data.message;
-          } 
-          else {
+          } else {
             this.$store.state.message = "Successful..Login to continue";
           }
         })
