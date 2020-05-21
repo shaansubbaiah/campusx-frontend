@@ -63,7 +63,13 @@
     <!-- 
     Card layout
     -->
-    <div v-masonry="masonryId" transition-duration="0.3s" item-selector=".item">
+    <div
+      v-masonry="masonryId"
+      transition-duration="0.3s"
+      item-selector=".item"
+      fit-width="true"
+      id="centered-masonry"
+    >
       <div v-masonry-tile="masonryId" class="item" v-for="(product,index) in products" :key="index">
         <!-- 
         Book card layout
@@ -240,15 +246,6 @@ export default {
 </script>
  
 <style scoped>
-/* #container {
-  /* display: flex; */
-/* flex-flow: row wrap; */
-/* justify-content: center !important; */
-/* align-content: stretch; */
-#container {
-  align-content: center !important;
-}
-
 #search-container {
   display: flex;
   flex-direction: row;

@@ -1,12 +1,25 @@
 <template>
-<div>
+  <div>
     <div class="card-expansion">
-      <div class="container" v-masonry="masonryId" transition-duration="0.3s" item-selector=".item">
-        <div v-masonry-tile="masonryId" class="item" v-for="(product,index) in products" :key="index">
+      <div
+        class="container"
+        v-masonry="masonryId"
+        transition-duration="0.3s"
+        item-selector=".item"
+        fit-width="true"
+        id="centered-masonry"
+      >
+        <div
+          v-masonry-tile="masonryId"
+          class="item"
+          v-for="(product,index) in products"
+          :key="index"
+        >
           <div class="card-button-container">
             <div class="button-box">
               <md-button class="md-accent" v-on:click="deleteProduct(product.id)">Delete</md-button>
-              <md-button class="md-primary" v-on:click="update">Edit
+              <md-button class="md-primary" v-on:click="update">
+                Edit
                 <UpdateProduct v-bind:product="product" />
               </md-button>
             </div>
@@ -155,16 +168,15 @@
     </div>
 
     <div v-if="alert">
-        <Alert />
+      <Alert />
     </div>
   </div>
-
 </template>
 
 <script>
 import axios from "axios";
 import UpdateProduct from "./UpdateThing";
-import Alert from "./Alert"
+import Alert from "./Alert";
 
 export default {
   name: "user-products",
@@ -211,7 +223,7 @@ export default {
           console.log(e);
         });
     },
-    update(){
+    update() {
       this.$store.state.updateproduct = true;
     }
   },

@@ -1,5 +1,12 @@
 <template>
-  <div class="container" v-masonry="masonryId" transition-duration="0.3s" item-selector=".item">
+  <div
+    class="container"
+    v-masonry="masonryId"
+    transition-duration="0.3s"
+    item-selector=".item"
+    fit-width="true"
+    id="centered-masonry"
+  >
     <div
       v-masonry-tile="masonryId"
       class="item"
