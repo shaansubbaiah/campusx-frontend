@@ -35,7 +35,7 @@ const store = new Vuex.Store({
     register: false,
     updateuser: false,
     addproduct: false,
-    updateproduct: false,
+    pid: null,
     message: "",
     alert: false
   },

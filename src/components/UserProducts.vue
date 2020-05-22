@@ -18,9 +18,8 @@
           <div class="card-button-container">
             <div class="button-box">
               <md-button class="md-accent" v-on:click="deleteProduct(product.id)">Delete</md-button>
-              <md-button class="md-primary" v-on:click="update">
+              <md-button class="md-primary" v-on:click="update(product.id)">
                 Edit
-                <UpdateProduct v-bind:product="product" />
               </md-button>
             </div>
             <!-- 
@@ -167,6 +166,10 @@
       </div>
     </div>
 
+    <div v-if="edit">
+      <UpdateProduct />
+    </div>
+
     <div v-if="alert">
       <Alert />
     </div>
@@ -177,12 +180,12 @@
 import axios from "axios";
 import UpdateProduct from "./UpdateThing";
 import Alert from "./Alert";
-
 export default {
   name: "user-products",
   data() {
     return {
       alert: false,
+      edit: false,
       products: {}
     };
   },
@@ -223,8 +226,9 @@ export default {
           console.log(e);
         });
     },
-    update() {
-      this.$store.state.updateproduct = true;
+    update(id) {
+      this.edit = true;
+      this.$store.state.pid = id;
     }
   },
   mounted() {
@@ -237,14 +241,12 @@ export default {
 .container {
   margin-top: 40px;
 }
-
 .button-box {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
 }
-
 .card-button-container {
   display: block;
   border-radius: 25px;
