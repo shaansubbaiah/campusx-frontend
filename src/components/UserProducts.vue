@@ -18,9 +18,8 @@
           <div class="card-button-container">
             <div class="button-box">
               <md-button class="md-accent" v-on:click="deleteProduct(product.id)">Delete</md-button>
-              <md-button class="md-primary" v-on:click="update">
+              <md-button class="md-primary" v-on:click="update(product.id)">
                 Edit
-                <UpdateProduct v-bind:product="product" />
               </md-button>
             </div>
             <!-- 
@@ -167,6 +166,10 @@
       </div>
     </div>
 
+    <div v-if="edit">
+      <UpdateProduct />
+    </div>
+
     <div v-if="alert">
       <Alert />
     </div>
@@ -177,12 +180,12 @@
 import axios from "axios";
 import UpdateProduct from "./UpdateThing";
 import Alert from "./Alert";
-
 export default {
   name: "user-products",
   data() {
     return {
       alert: false,
+      edit: false,
       products: {}
     };
   },
@@ -191,27 +194,23 @@ export default {
     Alert
   },
   methods: {
-    async userProducts() {
-      try {
-        await axios
-          .get(
-            "http://localhost:8080/api/users/" +
-              this.$store.state.userId +
-              "/things"
-          )
-          .then(response => {
-            this.products = response.data;
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+    userProducts() {
+      axios
+        .get(
+          "http://localhost:8080/api/users/" +
+            this.$store.state.userId +
+            "/things"
+        )
+        .then(response => {
+          this.products = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    async deleteProduct(id) {
-      await axios
+    deleteProduct(id) {
+      axios
         .delete("http://localhost:8080/api/things/" + id, {
           headers: { Authorization: "Bearer " + this.$store.state.token }
         })
@@ -219,12 +218,18 @@ export default {
           this.$store.state.message = response.data.message;
           this.alert = true;
         })
-        .catch(e => {
-          console.log(e);
-        });
     },
-    update() {
-      this.$store.state.updateproduct = true;
+    update(id) {
+      axios
+        .get("http://localhost:8080/api/things/"+id)
+        .then(response => {
+            this.$store.state.pid = response.data; 
+            console.log(this.$store.state.pid);
+            this.edit = true;
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
   },
   mounted() {
@@ -237,14 +242,12 @@ export default {
 .container {
   margin-top: 40px;
 }
-
 .button-box {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
 }
-
 .card-button-container {
   display: block;
   border-radius: 25px;

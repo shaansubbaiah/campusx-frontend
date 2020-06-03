@@ -350,14 +350,14 @@ export default {
       this.$v.selectedFile.$touch();
 
       if (
-        !this.$v.product.title.$invalid ||
-        !this.$v.product.author.$invalid ||
-        !this.$v.product.publisher.$invalid ||
-        !this.$v.product.sem.$invalid ||
-        !this.$v.product.branch.$invalid ||
-        !this.$v.product.donation.$invalid ||
-        !this.$v.product.phone.$invalid ||
-        !this.$v.selectedFile.$invalid()
+        !this.$v.product.title.$invalid &&
+        !this.$v.product.author.$invalid &&
+        !this.$v.product.publisher.$invalid &&
+        !this.$v.product.sem.$invalid &&
+        !this.$v.product.branch.$invalid &&
+        !this.$v.product.donation.$invalid &&
+        !this.$v.product.phone.$invalid &&
+        !this.$v.selectedFile.$invalid
       ) {
         this.saveBook();
       }
@@ -371,10 +371,10 @@ export default {
       this.$v.product.branch.$touch();
 
       if (
-        !this.$v.product.title.$invalid ||
-        !this.$v.product.link.$invalid ||
-        !this.$v.product.description.$invalid ||
-        !this.$v.product.sem.$invalid ||
+        !this.$v.product.title.$invalid &&
+        !this.$v.product.link.$invalid &&
+        !this.$v.product.description.$invalid &&
+        !this.$v.product.sem.$invalid &&
         !this.$v.product.branch.$invalid
       ) {
         this.saveDrive();
@@ -391,13 +391,13 @@ export default {
       this.$v.selectedFile.$touch();
 
       if (
-        !this.$v.product.title.$invalid ||
-        !this.$v.product.description.$invalid ||
-        !this.$v.product.sem.$invalid ||
-        !this.$v.product.branch.$invalid ||
-        !this.$v.product.donation.$invalid ||
-        !this.$v.product.phone.$invalid ||
-        !this.$v.selectedFile.$invalid()
+        !this.$v.product.title.$invalid &&
+        !this.$v.product.description.$invalid &&
+        !this.$v.product.sem.$invalid &&
+        !this.$v.product.branch.$invalid &&
+        !this.$v.product.donation.$invalid &&
+        !this.$v.product.phone.$invalid &&
+        !this.$v.selectedFile.$invalid
       ) {
         this.saveOther();
       }
@@ -410,11 +410,11 @@ export default {
       this.$v.product.phone.$touch();
 
       if (
-        !this.$v.product.title.$invalid ||
-        !this.$v.product.description.$invalid ||
-        !this.$v.product.location.$invalid ||
-        !this.$v.product.phone.$invalid ||
-        !this.$v.selectedFile.$invalid()
+        !this.$v.product.title.$invalid &&
+        !this.$v.product.description.$invalid &&
+        !this.$v.product.location.$invalid &&
+        !this.$v.product.phone.$invalid &&
+        !this.$v.selectedFile.$invalid
       ) {
         this.saveLostfound();
       }
@@ -442,13 +442,13 @@ export default {
           }
         })
         .then(response => {
-          this.book.id = response.data.id;
+          console.log(response.data)
+          this.$store.state.message = "Product added successfully!";
         })
         .catch(e => {
           console.log(e);
         });
       this.$store.state.addproduct = false;
-      this.$store.state.message = "Product added successfully!";
       this.alert = true;
     },
 
@@ -470,14 +470,13 @@ export default {
           }
         })
         .then(response => {
-          this.book.id = response.data.id;
+          this.$store.state.message = response.data.message;
         })
         .catch(e => {
           console.log(e);
         });
       
       this.$store.state.addproduct = false;
-      this.$store.state.message = "Product added successfully!";
       this.alert = true;
     },
 
@@ -502,14 +501,13 @@ export default {
           }
         })
         .then(response => {
-          this.book.id = response.data.id;
+          this.$store.state.message = response.data.message;
         })
         .catch(e => {
           console.log(e);
         });
 
       this.$store.state.addproduct = false;
-      this.$store.state.message = "Product added successfully!";
       this.alert = true;
     },
 
@@ -532,14 +530,13 @@ export default {
           }
         })
         .then(response => {
-          this.lostfound.id = response.data.id;
+          this.$store.state.message = response.data.message;
         })
         .catch(e => {
           console.log(e);
         });
 
       this.$store.state.addproduct = false;
-      this.$store.state.message = "Product added successfully!";
       this.alert = true;
     },
     cancel() {
