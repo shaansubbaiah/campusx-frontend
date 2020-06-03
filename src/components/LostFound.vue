@@ -33,6 +33,7 @@
             Posted at: {{lostfound.createdAt | datestring}}
             <br />
           </md-card-content>
+
           <md-card-actions>
             <div>
               <md-chip>{{lostfound.phone}}</md-chip>
