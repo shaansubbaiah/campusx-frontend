@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="top-text">
+      Your
+      <span style="color:rgba(68, 138, 255, 1)">Products</span> and
+      <span style="color:rgba(239, 76, 121, 1)">LostnFound</span>
+      items
+    </div>
     <div
       class="container"
       v-masonry="masonryId"
@@ -8,8 +14,11 @@
       fit-width="true"
       id="centered-masonry"
     >
+      <!-- 
+      User things
+      -->
       <div v-masonry-tile="masonryId" class="item" v-for="(product,index) in products" :key="index">
-        <div class="card-button-container">
+        <div class="card-button-container blue-border">
           <div class="button-box">
             <md-button class="md-accent" v-on:click="deleteProduct(product.id)">Delete</md-button>
             <md-button class="md-primary" v-on:click="update(product.id)">Edit</md-button>
@@ -126,6 +135,51 @@
           </div>
         </div>
       </div>
+      <!-- 
+      User lost found items 
+      -->
+      <div
+        v-masonry-tile="masonryId"
+        class="item"
+        v-for="(lostfound,index) in lostfounds"
+        :key="index"
+      >
+        <!-- 
+        LostFound card layout
+        -->
+        <div class="card-button-container pink-border">
+          <div class="button-box">
+            <md-button class="md-accent" v-on:click="deleteLostfound(lostfound.id)">Delete</md-button>
+          </div>
+          <div>
+            <md-card class="rounded-card">
+              <md-ripple>
+                <md-card-media>
+                  <img v-bind:src="'http://localhost:8080/'+lostfound.image" alt="lostfound.title" />
+                </md-card-media>
+
+                <md-card-header>
+                  <div class="md-title">{{lostfound.title | capitalize}}</div>
+                  <div class="md-subhead">Found at: {{lostfound.location | capitalize}}</div>
+                </md-card-header>
+
+                <md-card-content>
+                  Located at: {{lostfound.description | capitalize}}
+                  <br />
+                  Posted at: {{lostfound.createdAt | datestring}}
+                  <br />
+                </md-card-content>
+
+                <md-card-actions>
+                  <div>
+                    <md-chip>{{lostfound.phone}}</md-chip>
+                  </div>
+                </md-card-actions>
+              </md-ripple>
+            </md-card>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div v-if="edit">
@@ -148,7 +202,8 @@ export default {
     return {
       alert: false,
       edit: false,
-      products: {}
+      products: {},
+      lostfounds: {}
     };
   },
   components: {
@@ -192,17 +247,44 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    userLostfounds() {
+      axios
+        .get(
+          "http://localhost:8080/api/users/" +
+            this.$store.state.userId +
+            "/lostfounds"
+        )
+        .then(response => {
+          this.lostfounds = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    deleteLostfound(id) {
+      axios
+        .delete("http://localhost:8080/api/lostfound/" + id, {
+          headers: { Authorization: "Bearer " + this.$store.state.token }
+        })
+        .then(response => {
+          this.$store.state.message = response.data.message;
+          this.alert = true;
+        });
     }
   },
   mounted() {
     this.userProducts();
+    this.userLostfounds();
   }
 };
 </script> 
 
 <style scoped>
-.item {
-  margin-top: 30px;
+.top-text {
+  margin: 30px;
+  text-align: center;
 }
 .button-box {
   display: flex;
@@ -213,6 +295,18 @@ export default {
 .card-button-container {
   display: block;
   border-radius: 25px;
+  margin: 10px 5px 10px 5px;
+}
+.pink-border {
+  box-shadow: 0 7px 45px -10px rgba(239, 76, 121, 0.6);
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(239, 76, 121, 1) 100%
+  );
+}
+.blue-border {
   box-shadow: 0 7px 45px -10px rgba(68, 138, 255, 0.6);
   background: rgb(255, 255, 255);
   background: linear-gradient(
@@ -220,6 +314,5 @@ export default {
     rgba(255, 255, 255, 1) 0%,
     rgba(68, 138, 255, 1) 100%
   );
-  margin: 10px 5px 10px 5px;
 }
 </style>
