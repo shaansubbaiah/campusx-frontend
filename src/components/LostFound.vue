@@ -27,27 +27,17 @@
             <div class="md-subhead">found at {{lostfound.location}}</div>
           </md-card-header>
 
-          <md-card-expand>
-            <md-card-actions md-alignment="space-between">
-              <div>
-                <md-chip>{{lostfound.phone}}</md-chip>
-              </div>
-              <md-card-expand-trigger>
-                <md-button class="md-icon-button">
-                  <md-icon>keyboard_arrow_down</md-icon>
-                </md-button>
-              </md-card-expand-trigger>
-            </md-card-actions>
-
-            <md-card-expand-content>
-              <md-card-content>
-                Located at: {{lostfound.description}}
-                <br />
-                Posted at: {{lostfound.createdAt}}
-                <br />
-              </md-card-content>
-            </md-card-expand-content>
-          </md-card-expand>
+          <md-card-content>
+            Located at: {{lostfound.description}}
+            <br />
+            Posted at: {{lostfound.createdAt | datestring}}
+            <br />
+          </md-card-content>
+          <md-card-actions>
+            <div>
+              <md-chip>{{lostfound.phone}}</md-chip>
+            </div>
+          </md-card-actions>
         </md-ripple>
       </md-card>
     </div>
