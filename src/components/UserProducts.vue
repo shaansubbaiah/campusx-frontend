@@ -194,27 +194,23 @@ export default {
     Alert
   },
   methods: {
-    async userProducts() {
-      try {
-        await axios
-          .get(
-            "http://localhost:8080/api/users/" +
-              this.$store.state.userId +
-              "/things"
-          )
-          .then(response => {
-            this.products = response.data;
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+    userProducts() {
+      axios
+        .get(
+          "http://localhost:8080/api/users/" +
+            this.$store.state.userId +
+            "/things"
+        )
+        .then(response => {
+          this.products = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
-    async deleteProduct(id) {
-      await axios
+    deleteProduct(id) {
+      axios
         .delete("http://localhost:8080/api/things/" + id, {
           headers: { Authorization: "Bearer " + this.$store.state.token }
         })
@@ -222,13 +218,18 @@ export default {
           this.$store.state.message = response.data.message;
           this.alert = true;
         })
-        .catch(e => {
-          console.log(e);
-        });
     },
     update(id) {
-      this.edit = true;
-      this.$store.state.pid = id;
+      axios
+        .get("http://localhost:8080/api/things/"+id)
+        .then(response => {
+            this.$store.state.pid = response.data; 
+            console.log(this.$store.state.pid);
+            this.edit = true;
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
   },
   mounted() {

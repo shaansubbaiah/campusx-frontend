@@ -443,7 +443,7 @@ export default {
         })
         .then(response => {
           console.log(response.data)
-          this.$store.state.message = response.data.message;
+          this.$store.state.message = "Product added successfully!";
         })
         .catch(e => {
           console.log(e);
