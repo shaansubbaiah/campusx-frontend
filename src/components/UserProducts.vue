@@ -31,7 +31,7 @@
 
                 <md-card-header>
                   <div class="md-title">
-                    {{product.title}}
+                    {{product.title | capitalize}}
                     <md-chip class="donation-chip md-primary" v-if="product.donation">D</md-chip>
                   </div>
                   <div class="md-subhead">by {{product.book.author | capitalize}}</div>

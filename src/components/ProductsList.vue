@@ -122,11 +122,9 @@
               </md-card-header>
 
               <md-card-content>
-                Links to:
-                <a>{{product.drive.url}}</a>
+                <md-button class="md-primary md-dense md-raised" :href="product.drive.url">Open Link</md-button>
                 <br />
                 Posted at: {{product.createdAt | datestring}}
-                <br />
               </md-card-content>
 
               <md-card-actions md-alignment="space-between">

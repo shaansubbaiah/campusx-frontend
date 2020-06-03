@@ -23,12 +23,12 @@
           </md-card-media>
 
           <md-card-header>
-            <div class="md-title">{{lostfound.title}}</div>
-            <div class="md-subhead">found at {{lostfound.location}}</div>
+            <div class="md-title">{{lostfound.title | capitalize}}</div>
+            <div class="md-subhead">Found at: {{lostfound.location | capitalize}}</div>
           </md-card-header>
 
           <md-card-content>
-            Located at: {{lostfound.description}}
+            Located at: {{lostfound.description | capitalize}}
             <br />
             Posted at: {{lostfound.createdAt | datestring}}
             <br />
