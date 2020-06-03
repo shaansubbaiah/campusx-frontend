@@ -240,7 +240,7 @@ export default {
       axios
         .get("http://localhost:8080/api/things/" + id)
         .then(response => {
-          this.$store.state.pid = response.data;
+          this.$store.state.product = response.data;
           console.log(this.$store.state.product);
           this.edit = true;
         })

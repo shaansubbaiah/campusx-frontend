@@ -28,3 +28,11 @@ export default {
   }
 };
 </script>
+
+<style>
+  p{
+    text-align: center;
+    margin: 40px 20px 10px 20px;
+    font-size: 1.2em;
+  }
+</style>
