@@ -159,7 +159,7 @@ export default {
     }
   },
   mounted(){
-    this.product = this.$store.state.pid
+    this.product = this.$store.state.product;
   }
 }
 </script>
