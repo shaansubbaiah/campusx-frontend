@@ -240,7 +240,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import http from "../http"
 import { validationMixin } from "vuelidate";
 import { required, url } from "vuelidate/lib/validators";
 import Alert from './Alert';
@@ -309,7 +309,7 @@ export default {
       phone: {
         required,
         number(phone) {
-          return /^(\+91( )?)?[0-9]{10}$/g.test(phone);
+          return /^(\+91( )?)?[6-9][0-9]{9}$/g.test(phone);
         }
       }
     }
@@ -434,10 +434,9 @@ export default {
       fd.append("phone", this.product.phone);
       fd.append("userId", this.$store.state.userId);
 
-      axios
-        .post("http://localhost:8080/api/things/upload-book", fd, {
+      http
+        .post("/things/upload-book", fd, {
           headers: {
-            "content-type": undefined,
             Authorization: "Bearer " + this.$store.state.token
           }
         })
@@ -462,10 +461,9 @@ export default {
       fd.append("description", this.product.description);
       fd.append("userId", this.$store.state.userId);
       
-      axios
-        .post("http://localhost:8080/api/things/upload-drive", fd, {
+      http
+        .post("/things/upload-drive", fd, {
           headers: {
-            "content-type": undefined,
             Authorization: "Bearer " + this.$store.state.token
           }
         })
@@ -494,10 +492,9 @@ export default {
       fd.append("phone", this.product.phone);
       fd.append("userId", this.$store.state.userId);
     
-      axios
-        .post("http://localhost:8080/api/things/upload-other", fd, {
+      http
+        .post("/things/upload-other", fd, {
           headers: {
-            "content-type": undefined,
             Authorization: "Bearer " + this.$store.state.token
           }
         })
@@ -524,10 +521,9 @@ export default {
       fd.append("phone", this.product.phone);
       fd.append("userId", this.$store.state.userId);
       
-      axios
-        .post("http://localhost:8080/api/lostfound/post", fd, {
+      http
+        .post("/lostfound/post", fd, {
           headers: {
-            "content-type": undefined,
             Authorization: "Bearer " + this.$store.state.token
           }
         })

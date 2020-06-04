@@ -193,9 +193,10 @@
 </template>
 
 <script>
-import axios from "axios";
+import http from "../http-common";
 import UpdateProduct from "./UpdateThing";
 import Alert from "./Alert";
+
 export default {
   name: "user-products",
   data() {
@@ -212,12 +213,9 @@ export default {
   },
   methods: {
     userProducts() {
-      axios
-        .get(
-          "http://localhost:8080/api/users/" +
-            this.$store.state.userId +
-            "/things"
-        )
+      http
+        .get("/users/"+this.$store.state.userId +"/things")
+        
         .then(response => {
           this.products = response.data;
           console.log(response.data);
@@ -227,8 +225,8 @@ export default {
         });
     },
     deleteProduct(id) {
-      axios
-        .delete("http://localhost:8080/api/things/" + id, {
+      http
+        .delete("/things/" + id, {
           headers: { Authorization: "Bearer " + this.$store.state.token }
         })
         .then(response => {
@@ -237,8 +235,8 @@ export default {
         });
     },
     update(id) {
-      axios
-        .get("http://localhost:8080/api/things/" + id)
+      http
+        .get("/things/" + id)
         .then(response => {
           this.$store.state.product = response.data;
           console.log(this.$store.state.product);
@@ -249,12 +247,8 @@ export default {
         });
     },
     userLostfounds() {
-      axios
-        .get(
-          "http://localhost:8080/api/users/" +
-            this.$store.state.userId +
-            "/lostfounds"
-        )
+      http
+        .get("/users/" + this.$store.state.userId +"/lostfounds")
         .then(response => {
           this.lostfounds = response.data;
           console.log(response.data);
@@ -264,8 +258,8 @@ export default {
         });
     },
     deleteLostfound(id) {
-      axios
-        .delete("http://localhost:8080/api/lostfound/" + id, {
+      http
+        .delete("/lostfound/" + id, {
           headers: { Authorization: "Bearer " + this.$store.state.token }
         })
         .then(response => {
