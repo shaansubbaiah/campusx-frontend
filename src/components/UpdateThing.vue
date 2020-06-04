@@ -45,6 +45,14 @@
               </md-select>
             </md-field>
 
+            <md-field>
+              <label for="donation">TYPE</label>
+              <md-select v-model="product.donation">
+                <md-option value=true>Donation</md-option>
+                <md-option value=false>Trade</md-option>
+              </md-select>
+            </md-field>
+
             <md-field :class="{'md-invalid' : $v.product.book.phone.$error}">
               <label for="phone">CONTACT</label>
               <md-input v-model="$v.product.book.phone.$model"></md-input>
@@ -138,6 +146,14 @@
             <label for="branch">BRANCH</label>
             <md-select v-model="product.branch">
               <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
+            </md-select>
+          </md-field>
+
+          <md-field>
+            <label for="donation">TYPE</label>
+            <md-select v-model="product.donation">
+              <md-option value=true>Donation</md-option>
+              <md-option value=false>Trade</md-option>
             </md-select>
           </md-field>
 
@@ -286,7 +302,6 @@ export default {
         sem: this.product.sem,
         branch: this.product.branch,
         description: this.product.drive.description,
-        donation: this.product.donation,
         type: 'drive'
       }
       http
@@ -306,6 +321,7 @@ export default {
         sem: this.product.sem,
         branch: this.product.branch,
         description: this.product.other.description,
+        donation: this.product.donation,
         type: 'other'
       }
       http
