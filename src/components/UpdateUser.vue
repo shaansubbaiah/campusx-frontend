@@ -4,26 +4,26 @@
       <md-dialog-content>
         <form>
           <md-field :class="getValidationClass('name')">
-            <label for="name">NEW USERNAME</label>
+            <label for="name">New Username</label>
             <md-input type="name" v-model="user.name"></md-input>
             <span class="md-error" v-if="!$v.user.name.minLength">Atleast 3 characters</span>
           </md-field>
 
           <md-field :class="getValidationClass('email')">
-            <label for="email">NEW EMAIL</label>
+            <label for="email">New Email</label>
             <md-input type="email" v-model="user.email"></md-input>
             <span class="md-error" v-if="!$v.user.email.email">Invalid email</span>
           </md-field>
 
           <md-field :class="getValidationClass('oldpassword')">
-            <label for="oldpassword">OLD PASSWORD</label>
+            <label for="oldpassword">Old Password</label>
             <md-input type="password" v-model="user.oldpassword"></md-input>
-            <span class="md-error" v-if="!$v.user.oldpassword.required">Old password required</span>
+            <span class="md-error" v-if="!$v.user.oldpassword.required">Required field</span>
             <span class="md-error" v-if="!$v.user.oldpassword.minLength">Atleast 8 characters</span>
           </md-field>
 
           <md-field :class="getValidationClass('newpassword')">
-            <label for="newpassword">NEW PASSWORD</label>
+            <label for="newpassword">New Password</label>
             <md-input type="password" v-model="user.newpassword"></md-input>
             <span class="md-error" v-if="!$v.user.newpassword.minLength">Atleast 8 characters</span>
           </md-field>

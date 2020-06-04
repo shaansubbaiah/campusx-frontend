@@ -9,26 +9,26 @@
           <form @submit.prevent="validateBook(product.id)">
 
             <md-field :class="{'md-invalid' : $v.product.title.$error}">
-              <label for="title">TITLE</label>
+              <label for="title">Title</label>
               <md-input v-model="$v.product.title.$model"></md-input>
               <span class="md-error" v-if="!$v.product.title.required">Required field</span>
             </md-field>
 
             <md-field :class="{'md-invalid' : $v.product.book.author.$error}">
-              <label for="author">AUTHOR</label>
+              <label for="author">Author</label>
               <md-input v-model="$v.product.book.author.$model"></md-input>
               <span class="md-error" v-if="!$v.product.book.author.required">Required field</span>
               <span class="md-error" v-else-if="!$v.product.book.author.alphabet">Invalid characters</span>
             </md-field>
 
             <md-field :class="{'md-invalid' : $v.product.book.publisher.$error}">
-              <label for="publisher">PUBLISHER</label>
+              <label for="publisher">Publisher</label>
               <md-input v-model="$v.product.book.publisher.$model"></md-input>
               <span class="md-error" v-if="!$v.product.book.publisher.required">Required field</span>
             </md-field>
 
             <md-field>
-              <label for="sem">SEM</label>
+              <label for="sem">Sem</label>
               <md-select v-model="product.sem">
                 <md-option
                   v-for="semester in semesters"
@@ -39,14 +39,14 @@
             </md-field>
 
             <md-field>
-              <label for="branch">BRANCH</label>
+              <label for="branch">Branch</label>
               <md-select v-model="product.branch">
                 <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
               </md-select>
             </md-field>
 
             <md-field>
-              <label for="donation">TYPE</label>
+              <label for="donation">Type</label>
               <md-select v-model="product.donation">
                 <md-option value=true>Donation</md-option>
                 <md-option value=false>Trade</md-option>
@@ -54,7 +54,7 @@
             </md-field>
 
             <md-field :class="{'md-invalid' : $v.product.book.phone.$error}">
-              <label for="phone">CONTACT</label>
+              <label for="phone">Contact</label>
               <md-input v-model="$v.product.book.phone.$model"></md-input>
               <span class="md-error" v-if="!$v.product.book.phone.required">Required field</span>
               <span class="md-error" v-else-if="!$v.product.book.phone.number">Invalid contact</span>
@@ -72,26 +72,26 @@
           <form @submit.prevent="validateDrive(product.id)">
 
           <md-field :class="{'md-invalid' : $v.product.title.$error}">
-            <label for="title">TITLE</label>
+            <label for="title">Title</label>
             <md-input v-model="$v.product.title.$model"></md-input>
             <span class="md-error" v-if="!$v.product.title.required">Required field</span>
           </md-field>
 
           <md-field :class="{'md-invalid' : $v.product.drive.url.$error}">
-            <label for="url">LINK</label>
+            <label for="url">Link</label>
             <md-input v-model="$v.product.drive.url.$model"></md-input>
             <span class="md-error" v-if="!$v.product.drive.url.required">Required field</span>
             <span class="md-error" v-else-if="!$v.product.drive.url.url">Invalid URL</span>
           </md-field>
 
           <md-field :class="{'md-invalid' : $v.product.drive.description.$error}">
-            <label for="description">DESCRIPTION</label>
+            <label for="description">Description</label>
             <md-input v-model="$v.product.drive.description.$model"></md-input>
             <span class="md-error" v-if="!$v.product.drive.description.required">Required field</span>
           </md-field>
 
           <md-field>
-            <label for="sem">SEM</label>
+            <label for="sem">Sem</label>
             <md-select v-model="product.sem">
               <md-option
                 v-for="semester in semesters"
@@ -102,7 +102,7 @@
           </md-field>
 
           <md-field>
-            <label for="branch">BRANCH</label>
+            <label for="branch">Brsnch</label>
             <md-select v-model="product.branch">
               <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
             </md-select>
@@ -120,19 +120,19 @@
         <form @submit.prevent="validateOther(product.id)">
 
           <md-field :class="{'md-invalid' : $v.product.title.$error}">
-            <label for="title">TITLE</label>
+            <label for="title">Title</label>
             <md-input v-model="$v.product.title.$model"></md-input>
             <span class="md-error" v-if="!$v.product.title.required">Required field</span>
           </md-field>
 
           <md-field :class="{'md-invalid' : $v.product.other.description.$error}">
-            <label for="description">DESCRIPTION</label>
+            <label for="description">Description</label>
             <md-input v-model="$v.product.other.description.$model"></md-input>
             <span class="md-error" v-if="!$v.product.other.description.required">Required field</span>
           </md-field>
 
           <md-field>
-            <label for="sem">SEM</label>
+            <label for="sem">Sem</label>
             <md-select v-model="product.sem">
               <md-option
                 v-for="semester in semesters"
@@ -143,14 +143,14 @@
           </md-field>
 
           <md-field>
-            <label for="branch">BRANCH</label>
+            <label for="branch">Branch</label>
             <md-select v-model="product.branch">
               <md-option v-for="branch in branches" :value="branch" :key="branch">{{branch}}</md-option>
             </md-select>
           </md-field>
 
           <md-field>
-            <label for="donation">TYPE</label>
+            <label for="donation">Type</label>
             <md-select v-model="product.donation">
               <md-option value=true>Donation</md-option>
               <md-option value=false>Trade</md-option>
@@ -158,7 +158,7 @@
           </md-field>
 
           <md-field :class="{'md-invalid' : $v.product.other.phone.$error}">
-            <label for="phone">CONTACT</label>
+            <label for="phone">Contact</label>
             <md-input v-model="$v.product.other.phone.$model"></md-input>
             <span class="md-error" v-if="!$v.product.other.phone.required">Required field</span>
             <span class="md-error" v-else-if="!$v.product.other.phone.number">Invalid contact</span>
