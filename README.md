@@ -1,24 +1,34 @@
-# front-end
+# CampusX - Frontend
 
-## Project setup
-```
-npm install
-```
+---
+## Preview
+![](screenshots/demoX.gif)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Screenshots
+<img src="screenshots/1.png" width="80%">
+<img src="screenshots/2.png" width="80%">
+<img src="screenshots/3.png" width="80%">
 
-### Compiles and minifies for production
-```
-npm run build
-```
+---
+## Getting started
 
-### Lints and fixes files
-```
-npm run lint
-```
+To get the Node server running locally:
+- Clone this repo
+- `npm install` to install all required dependencies
+- `npm run serve` will compile and hot-reload for development
 
-### Customize configuration
+>`npm run build` Compiles and minifies for production.
+>`npm run lint` Lints and fixes files.
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+---
+## Code Overview
+
+### Dependencies
+- [expressjs](https://github.com/expressjs/express) - The server for handling and routing HTTP requests 
+- [vue](https://github.com/vuejs/vue) - JS Framework used for building the UI
+- [vue-material](https://github.com/vuematerial/vue-material) - For material themed assets like buttons, inputs, etc.
+- [axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
+---
