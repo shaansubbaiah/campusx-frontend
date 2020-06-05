@@ -189,7 +189,7 @@ export default {
 #logo {
   grid-column: 2/3;
   grid-row: 2/3;
-  font-size: calc(40px + (72 - 20) * ((100vw - 300px) / (1600 - 300)));
+  font-size: calc(40px + (72 - 40) * ((100vw - 300px) / (1600 - 300)));
   line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px) / (1600 - 300)));
   justify-self: center;
 }
