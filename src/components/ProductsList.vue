@@ -116,8 +116,8 @@
             <md-ripple>
               <md-card-header>
                 <a :href="'/product/' + product.id">
-                  <div class="md-title">{{product.title | capitalize}}</div>
-                  <div class="md-subhead">{{product.drive.description | capitalize}}</div>
+                  <div class="md-title" id="drive-title">{{product.title | capitalize}}</div>
+                  <div class="md-subhead" id="drive-desc">{{product.drive.description | capitalize}}</div>
                 </a>
               </md-card-header>
 

@@ -73,8 +73,11 @@
               <md-ripple>
                 <md-card-header>
                   <a :href="'/product/' + product.id">
-                    <div class="md-title">{{product.title | capitalize}}</div>
-                    <div class="md-subhead">{{product.drive.description | capitalize}}</div>
+                    <div class="md-title" id="drive-title">{{product.title | capitalize}}</div>
+                    <div
+                      class="md-subhead"
+                      id="drive-desc"
+                    >{{product.drive.description | capitalize}}</div>
                   </a>
                 </md-card-header>
 
@@ -214,8 +217,8 @@ export default {
   methods: {
     userProducts() {
       http
-        .get("/users/"+this.$store.state.userId +"/things")
-        
+        .get("/users/" + this.$store.state.userId + "/things")
+
         .then(response => {
           this.products = response.data;
           console.log(response.data);
@@ -248,7 +251,7 @@ export default {
     },
     userLostfounds() {
       http
-        .get("/users/" + this.$store.state.userId +"/lostfounds")
+        .get("/users/" + this.$store.state.userId + "/lostfounds")
         .then(response => {
           this.lostfounds = response.data;
           console.log(response.data);

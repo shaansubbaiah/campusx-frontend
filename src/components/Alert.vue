@@ -3,7 +3,7 @@
     <md-dialog :md-active.sync="active">
       <p>{{this.$store.state.message}}</p>
       <md-dialog-actions>
-        <md-button class="md-primary" @click="onConfirm">Sweet!</md-button>
+        <md-button class="md-primary" @click="onConfirm">Okay</md-button>
       </md-dialog-actions>
     </md-dialog>
   </div>

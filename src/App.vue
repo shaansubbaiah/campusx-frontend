@@ -29,8 +29,12 @@
             <Register />
           </md-button>
 
-          <md-button v-show="this.$store.state.userId" class="md-primary" v-on:click="Edit">
-            Update User
+          <md-button
+            v-show="this.$store.state.userId"
+            class="md-dense md-primary"
+            v-on:click="Edit"
+          >
+            User Settings
             <UpdateUser />
           </md-button>
 
@@ -45,7 +49,10 @@
 
     <slide-y-down-transition appear :duration="1000" :delay="500">
       <div id="logo">
-        <h3 id="logo">books kodi</h3>
+        <h3 id="logo">
+          <span style="color:rgba(0, 0, 0, 1)">Campus</span>
+          <span style="color:rgba(68, 138, 255, 1)">X</span>
+        </h3>
       </div>
     </slide-y-down-transition>
 
@@ -182,7 +189,7 @@ export default {
 #logo {
   grid-column: 2/3;
   grid-row: 2/3;
-  font-size: calc(40px + (72 - 40) * ((100vw - 300px) / (1600 - 300)));
+  font-size: calc(40px + (72 - 20) * ((100vw - 300px) / (1600 - 300)));
   line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px) / (1600 - 300)));
   justify-self: center;
 }
@@ -191,6 +198,6 @@ export default {
   grid-column: 2/3;
   grid-row: 4/5;
   justify-self: center;
-  margin: 10px;
+  margin: 30px 10px 10px 10px;
 }
 </style>

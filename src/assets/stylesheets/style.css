@@ -62,3 +62,14 @@ img,
 #centered-masonry {
   margin: 0 auto;
 }
+
+/* fix for blue links in drive titles */
+#drive-title,
+#drive-desc {
+  text-decoration: none !important;
+  color: black !important;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
