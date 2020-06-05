@@ -28,7 +28,7 @@
           </md-card-header>
 
           <md-card-content>
-            Located at: {{lostfound.description | capitalize}}
+            Description: {{lostfound.description | capitalize}}
             <br />
             Posted at: {{lostfound.createdAt | datestring}}
             <br />
