@@ -602,3 +602,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+/* fix for extremely huge popup dialog */
+.md-dialog /deep/.md-dialog-container {
+  max-width: 768px;
+}
+</style>
