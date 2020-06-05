@@ -4,8 +4,6 @@ import router from './router';
 import Vuex from 'vuex';
 import { VueMasonryPlugin } from 'vue-masonry';
 import createPersistedState from 'vuex-persistedstate';
-
-import VeeValidate from 'vee-validate';
 import VueClipboard from 'vue-clipboard2'
 
 require('./assets/stylesheets/style.css')
@@ -22,7 +20,6 @@ Vue.use(Transitions)
 Vue.use(VueClipboard)
 Vue.use(VueMaterial)
 Vue.use(VueMasonryPlugin)
-Vue.use(VeeValidate)
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
