@@ -497,8 +497,7 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data);
-          this.$store.state.message = "Book added successfully!";
+          this.$store.state.message = response.data.message;
         })
         .catch(e => {
           console.log(e);
@@ -524,8 +523,7 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data);
-          this.$store.state.message = "Link added successfully!";
+          this.$store.state.message = response.data.message;
         })
         .catch(e => {
           console.log(e);
@@ -555,8 +553,7 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data);
-          this.$store.state.message = "Product added successfully!";
+          this.$store.state.message = response.data.message;
         })
         .catch(e => {
           console.log(e);
