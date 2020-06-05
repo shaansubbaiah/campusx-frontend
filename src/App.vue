@@ -6,7 +6,7 @@
           <p>
             Hey
             <br />
-            <strong>{{this.$store.state.username}}!</strong>
+            <strong>{{this.$store.state.username | capitalize}}!</strong>
           </p>
         </div>
 
@@ -62,7 +62,7 @@
           ></md-tab>
           <md-tab id="lost-found" md-label="Lost N Found" md-icon="live_help" to="/lostfound"></md-tab>
         </md-tabs>
-        <!-- 
+        <!--
       Content render here
         -->
         <router-view />
@@ -73,7 +73,7 @@
       <div id="footer">You have reached the bottom!</div>
     </slide-y-down-transition>
 
-    <!-- 
+    <!--
     FAB
     -->
     <slide-y-down-transition appear :duration="1000" :delay="1500">
@@ -129,7 +129,7 @@ export default {
     }
   }
 };
-</script> 
+</script>
 
 <style scoped>
 .fade-enter-active,
